@@ -1,0 +1,4 @@
+Facebook for developers
+
+https://developers.facebook.com/docs/graph-api/overview/?translation
+https://github.com/DanielNajera115/Proyecto_Ayudantia/blob/ProyectoGui/AyudantiaGui/AyudantiaGui/Form1.cs
