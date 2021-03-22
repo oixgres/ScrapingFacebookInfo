@@ -72,22 +72,21 @@ class Facebook_Scraper_POST:
 
     def generateJson (self,file):
         file = open(file,'w+',encoding="utf-8")
-        json_element={
-        "link":"",
-        "poster_name":"",
-        "post_ID":0,
-        "post_text":""
-        }
+        data=[]
+        
 
         for index in range(len(self.POST_URL)):
-            json_element["link"]=self.POST_URL[index]
-            json_element["poster_name"]=self.POSTER_NAME[index]
-            json_element["post_ID"]=self.POST_ID[index]
-            json_element["post_text"]=self.POSTER_TEXT[index]            
-            json.dump(json_element,file,indent=4, ensure_ascii=False)
+            element={}
+            element["link"]=self.POST_URL[index]
+            element["poster_name"]=self.POSTER_NAME[index]
+            element["post_ID"]=self.POST_ID[index]
+            element["post_text"]=self.POSTER_TEXT[index]
+            data.append(element)
+                  
+        json.dump(data,file,indent=4, ensure_ascii=False)
             
         file.close()
-
+        
         
         
             
