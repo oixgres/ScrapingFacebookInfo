@@ -1,6 +1,7 @@
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import NoSuchElementException
 import time
 import re
 import json
@@ -84,12 +85,41 @@ class Facebook_Scraper_POST:
             data.append(element)
                   
         json.dump(data,file,indent=4, ensure_ascii=False)
-            
         file.close()
         
         
         
-            
+    #https://m.facebook.com/ufi/group/seenby/profile/browser/?id=433655667664674
+    def test_User_visited(self,POST_ID):
+        URL_VISITED="https://m.facebook.com/ufi/group/seenby/profile/browser/?id="+str(POST_ID)
+        self.driver.get(URL_VISITED)
+        
+        t=True
+        json_data={} 
+        json_data["link_ID"]=POST_ID
+        while t:
+            try:
+                self.driver.find_element_by_xpath("/html/body/div[1]/div/div[4]/div/div/div/div/div[2]/div[1]/div[2]/a/div/div/div").click()
+                time.sleep(1)
+            except NoSuchElementException:  #spelling error making this code not work as expected
+                t=False
+                pass
+        list_name = self.driver.find_elements_by_xpath("//span/strong")
+        visited_names=[]
+        
+        index = 1
+        for name in list_name:
+            if len(name.text)>0:
+                visited_name={}
+                key='name'+str(index)
+                visited_name[key]=name.text
+                visited_names.append(visited_name)
+                index+=1
+                print(name.text)
+        json_data["visited_names"]=visited_names
+        file = open('people_visited','w+',encoding="utf-8")
+        json.dump(json_data,file,indent=4, ensure_ascii=False)
+        file.close()
 
     
     def scroll_max(self):
