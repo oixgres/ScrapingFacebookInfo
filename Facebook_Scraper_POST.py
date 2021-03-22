@@ -99,9 +99,9 @@ class Facebook_Scraper_POST:
         json_data["link_ID"]=POST_ID
         while t:
             try:
-                self.driver.find_element_by_xpath("/html/body/div[1]/div/div[4]/div/div/div/div/div[2]/div[1]/div[2]/a/div/div/div").click()
+                self.driver.find_element_by_xpath("/html/body/div[1]/div/div[4]/div/div/div/div/div[2]/div[1]/div[2]/a/div/div/div").click()   # clic al elemento ver mas
                 time.sleep(1)
-            except NoSuchElementException:  #spelling error making this code not work as expected
+            except NoSuchElementException:  
                 t=False
                 pass
         list_name = self.driver.find_elements_by_xpath("//span/strong")
@@ -117,7 +117,7 @@ class Facebook_Scraper_POST:
                 index+=1
                 print(name.text)
         json_data["visited_names"]=visited_names
-        file = open('people_visited','w+',encoding="utf-8")
+        file = open('people_visited.json','w+',encoding="utf-8")
         json.dump(json_data,file,indent=4, ensure_ascii=False)
         file.close()
 
