@@ -9,7 +9,8 @@ from Facebook_Scraper_POST import Facebook_Scraper_POST
 
 if __name__ == "__main__":
     
-    PATH ="C:/Users/fhaos/Documents/FCQI/8mo/ayundantia/chromedriver.exe"
+    #PATH ="C:/Users/fhaos/Documents/FCQI/8mo/ayundantia/chromedriver.exe"
+    PATH = "chromedriver.exe"
     h = Facebook_Scraper_POST(PATH)
     h.loginSession(URL="https://mbasic.facebook.com/",user=user,password=password)
     # h.get("https://m.facebook.com/groups/413938496303058")
@@ -21,4 +22,12 @@ if __name__ == "__main__":
         data_json = json.loads(f.read())
     print(str(data_json[0]['post_ID']))
     
+    print('\n *** visitas *** \n')
     h.test_User_visited(data_json[0]['post_ID'])
+    print('\n *** likes *** \n')
+    h.test_User_liked(data_json[0]['post_ID'])
+    print('\n *** compartidas *** \n')
+    h.test_User_shared(data_json[0]['post_ID'])
+    
+    
+    

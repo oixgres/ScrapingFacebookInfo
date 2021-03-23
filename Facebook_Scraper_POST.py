@@ -87,9 +87,8 @@ class Facebook_Scraper_POST:
         json.dump(data,file,indent=4, ensure_ascii=False)
         file.close()
         
-        
-        
     #https://m.facebook.com/ufi/group/seenby/profile/browser/?id=433655667664674
+    #Obtener usuarios que visitaron el post
     def test_User_visited(self,POST_ID):
         URL_VISITED="https://m.facebook.com/ufi/group/seenby/profile/browser/?id="+str(POST_ID)
         self.driver.get(URL_VISITED)
@@ -120,7 +119,75 @@ class Facebook_Scraper_POST:
         file = open('people_visited.json','w+',encoding="utf-8")
         json.dump(json_data,file,indent=4, ensure_ascii=False)
         file.close()
-
+        
+    #https://m.facebook.com/ufi/reaction/profile/browser/?ft_ent_identifier=456734482023459
+    #https://m.facebook.com/ufi/reaction/profile/browser/?ft_ent_identifier=469954730701434
+    #Obtener likes del post
+    def test_User_liked(self, POST_ID):
+        URL_VISITED="https://m.facebook.com/ufi/reaction/profile/browser/?ft_ent_identifier="+str(POST_ID)
+        self.driver.get(URL_VISITED)
+        
+        
+        t=True
+        json_data={} 
+        json_data["link_ID"]=POST_ID
+        while t:
+            try:
+                self.driver.find_element_by_xpath("/html/body/div[1]/div/div[4]/div/div/div/div/div[2]/div[1]/div[2]/a/div/div/div").click()   # clic al elemento ver mas
+                time.sleep(1)
+            except NoSuchElementException:  
+                t=False
+                pass
+        list_name = self.driver.find_elements_by_xpath("//span/strong")
+        liked_names=[]
+        
+        index = 1
+        for name in list_name:
+            if len(name.text)>0:
+                liked_name={}
+                key='name'+str(index)
+                liked_name[key]=name.text
+                liked_names.append(liked_name)
+                index+=1
+                print(name.text)
+        json_data["liked_names"]=liked_names
+        file = open('people_liked.json','w+',encoding="utf-8")
+        json.dump(json_data,file,indent=4, ensure_ascii=False)
+        file.close()  
+        
+    #https://m.facebook.com/browse/shares?id=469954730701434
+    #Obtener quienes compartieron el post
+    def test_User_shared(self, POST_ID):
+        URL_VISITED="https://m.facebook.com/browse/shares?id="+str(POST_ID)
+        self.driver.get(URL_VISITED)
+        
+        t=True
+        json_data={} 
+        json_data["link_ID"]=POST_ID
+        while t:
+            try:
+                self.driver.find_element_by_xpath("/html/body/div[1]/div/div[4]/div/div/div/div/div[2]/div[1]/div[2]/a/div/div/div").click()   # clic al elemento ver mas
+                time.sleep(1)
+            except NoSuchElementException:  
+                t=False
+                pass
+        list_name = self.driver.find_elements_by_xpath("//span/strong")
+        shared_names=[]
+        
+        index = 1
+        for name in list_name:
+            if len(name.text)>0:
+                shared_name={}
+                key='name'+str(index)
+                shared_name[key]=name.text
+                shared_names.append(shared_name)
+                index+=1
+                print(name.text)
+                
+        json_data["shared_names"]=shared_names
+        file = open('people_shared.json','w+',encoding="utf-8")
+        json.dump(json_data,file,indent=4, ensure_ascii=False)
+        file.close()  
     
     def scroll_max(self):
         t = True
