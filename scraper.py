@@ -26,6 +26,7 @@ if __name__ == "__main__":
     h.test_User_names(data_json[0]['post_ID'],URL_VISITED,"people_visited.json","visited_names")
 
     h.test_User_names(data_json[0]['post_ID'],URL_LIKED,"people_liked.json","liked_names")
+    h.test_User_names(data_json[0]['post_ID'],URL_SHARED,"people_shared.json","shared_names")
     # print('\n *** likes *** \n')
     # h.test_User_liked(data_json[0]['post_ID'])
     # print('\n *** compartidas *** \n')

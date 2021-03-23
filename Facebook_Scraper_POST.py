@@ -121,6 +121,7 @@ class Facebook_Scraper_POST:
                 visited_names.append(visited_name)
                 index+=1
                 print(name.text)
+        json_data["number"]=len(visited_names)
         json_data[type_names]=visited_names
         file = open(file,'w+',encoding="utf-8")
         json.dump(json_data,file,indent=4, ensure_ascii=False)
