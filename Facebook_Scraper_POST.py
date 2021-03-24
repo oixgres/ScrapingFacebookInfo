@@ -141,4 +141,68 @@ class Facebook_Scraper_POST:
             if scrollHeight_scrolled==scrollHeight_now:
                 t=False
 
+
+
+    # https://m.facebook.com/story.php?story_fbid=2765539700363999&id=1629107234007257&anchor_composer=false
+    def test_comment_POST(self,URL):
+        self.scroll_to_max_height_comment(URL)
+        self.see_comments_secondary(SEE_COMMENTS_SECONDARY_CLASS_NAME)
+        boxs = self.driver.find_elements_by_xpath("//div[@class='_2b04']") 
+        json_post_comments={}
+        comments =[]
+        num_comment = 0
+        for box in boxs:
+            try:
+                name = box.find_element_by_css_selector(" div._2b06 > div._2b05")
+                comment_Text = box.find_element_by_css_selector(" div._2b06 > div:nth-child(2)")
+                comment={}
+                num_comment+=1
+                comment['number_comment']=num_comment
+                comment['name']=name.text
+                comment['comment_text']=comment_Text.text
+                comments.append(comment)
+            except NoSuchElementException:
+                print("usuario no capturado por uso de gif")
+                pass
+        #json_post_comment['post_id']=post_id
+        json_post_comments['total_comments']=num_comment
+        json_post_comments['comments']=comments
+        file = open('post_comments.json','w+',encoding="utf-8")
+        json.dump(json_post_comments,file,indent=4, ensure_ascii=False)
+        file.close()
+        
+
+    
+    def see_comments_secondary(self,class_name):
+        for bton in self.driver.find_elements_by_class_name(class_name):
+                    bton.click()
+                    time.sleep(0.5)
+
+
+    def see_past_comment(self,web_elements):
+        for web_element in web_elements:
+            t=True
+            while t:
+                try:
+                    web_element.find_element_by_xpath('//a[@class="async_elem"]').click()   # clic al elemento ver mas
+                    time.sleep(1)
+                except NoSuchElementException:  
+                    t=False
+                    pass
+
+
+    def scroll_to_max_height_comment(self,URL):
+        self.driver.get(URL)
+        t=True
+        while t:
+            try:
+                self.driver.find_element_by_xpath('//div[@class="async_elem"]').click()   # clic al elemento ver mas
+                time.sleep(2)
+            except NoSuchElementException:  
+                t=False
+                pass
+        
+
+
+
     
