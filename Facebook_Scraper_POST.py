@@ -64,6 +64,7 @@ class Facebook_Scraper_POST:
                 POSTER_TEXT.append("No hay texto")
             poster_name=self.driver.find_element_by_xpath(POSTER_NAME_XPATH)
             POSTER_NAME.append(poster_name.text)
+            time.sleep(1)
             
 
         
@@ -113,18 +114,18 @@ class Facebook_Scraper_POST:
         self.driver.get(url)
         
         t=True
-        json_data={} 
-        json_data["link_ID"]=POST_ID
+        
         while t:
             try:
                 self.driver.find_element_by_xpath(BOTTOM_SEE_MORE_XPATH).click()   # clic al elemento ver mas
-                time.sleep(1)
+                time.sleep(2)
             except NoSuchElementException:  
                 t=False
                 pass
         list_name = self.driver.find_elements_by_xpath(LIST_NAME_XPATH)
         visited_names=[]
-        
+        json_data={} 
+        json_data["link_id"]=POST_ID
         index = 1
         for name in list_name:
             if len(name.text)>0:
@@ -166,8 +167,8 @@ class Facebook_Scraper_POST:
         num_comment = 0
         for box in boxs:
             try:
-                name = box.find_element_by_css_selector(" div._2b06 > div._2b05")
-                comment_Text = box.find_element_by_css_selector(" div._2b06 > div:nth-child(2)")
+                name = box.find_element_by_css_selector(" div._2b06 > div._2b05")    # nombre de usuario de comentario class=_2b05
+                comment_Text = box.find_element_by_css_selector(" div._2b06 > div:nth-child(2)") # div:nth-child(2) texto de comentario
                 comment={}
                 num_comment+=1
                 comment['number_comment']=num_comment
@@ -186,8 +187,8 @@ class Facebook_Scraper_POST:
     
     def see_comments_secondary(self,class_name):
         for bton in self.driver.find_elements_by_class_name(class_name):
-                    bton.click()
-                    time.sleep(0.5)
+            bton.click()
+            time.sleep(0.5)
 
 
     def see_past_comment(self,web_elements):

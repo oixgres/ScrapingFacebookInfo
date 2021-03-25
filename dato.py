@@ -1,5 +1,6 @@
-user ="mozi66.feng@gmail.com"
-password = "958674"
+user =["mozi66.feng@gmail.com","axmoroigres@gmail.com"]
+password = ["958674","12JEFF34"]
+
 
 URL_LOGIN ="https://mbasic.facebook.com/"
 URL_GROUP ="https://m.facebook.com/groups/413938496303058"
