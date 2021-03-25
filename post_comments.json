@@ -1,20 +1,378 @@
-{
-    "total_comments": 3,
-    "comments": [
-        {
-            "number_comment": 1,
-            "name": "Veronica Tapia",
-            "comment_text": "Muchas felicidades!!"
-        },
-        {
-            "number_comment": 2,
-            "name": "Maria Teresa Viana",
-            "comment_text": "Felicidades, esto es tener tenacidad. Asi se hace"
-        },
-        {
-            "number_comment": 3,
-            "name": "Reyes Juarez",
-            "comment_text": "FELICIDADES @Jaime Arvizu. Yo no sabía el origen de su motivación, y en efecto, estamos en este mundo y debemos pretender extender nuestra existencia.\nEs grandioso EL LOGRO obtenido a la fecha. Que bueno que ahora ya sea para usted UN HABITO hacer ejercicio. Es un gran ejemplo para nosotros."
-        }
-    ]
-}
+[
+    {
+        "post_Id": "469954730701434",
+        "total_comments": 3,
+        "comments": [
+            {
+                "number_comment": 1,
+                "name": "Veronica Tapia",
+                "comment_text": "Muchas felicidades!!"
+            },
+            {
+                "number_comment": 2,
+                "name": "Maria Teresa Viana",
+                "comment_text": "Felicidades, esto es tener tenacidad. Asi se hace"
+            },
+            {
+                "number_comment": 3,
+                "name": "Reyes Juarez",
+                "comment_text": "FELICIDADES @Jaime Arvizu. Yo no sabía el origen de su motivación, y en efecto, estamos en este mundo y debemos pretender extender nuestra existencia.\nEs grandioso EL LOGRO obtenido a la fecha. Que bueno que ahora ya sea para usted UN HABITO hacer ejercicio. Es un gran ejemplo para nosotros."
+            }
+        ]
+    },
+    {
+        "post_Id": "456734482023459",
+        "total_comments": 0,
+        "comments": []
+    },
+    {
+        "post_Id": "440370080326566",
+        "total_comments": 1,
+        "comments": [
+            {
+                "number_comment": 1,
+                "name": "Tere Fuentes Marrufo",
+                "comment_text": "Buenísima información...gracias"
+            }
+        ]
+    },
+    {
+        "post_Id": "438185700545004",
+        "total_comments": 0,
+        "comments": []
+    },
+    {
+        "post_Id": "433685554328352",
+        "total_comments": 3,
+        "comments": [
+            {
+                "number_comment": 1,
+                "name": "Guillermo Ruiz Esparza",
+                "comment_text": "Yo no recomiendo los 7 días , hay que dejar descansar al cuerpo también"
+            },
+            {
+                "number_comment": 2,
+                "name": "José Gallegos",
+                "comment_text": "Guillermo Ruiz Esparza voy de acuerdo suponiendo que se llega a la atrofia muscular diario, pero hay actividades moderadas que se pudiesen hacer siempre como trotar, correr, escalar, etc"
+            },
+            {
+                "number_comment": 3,
+                "name": "Reyes Juarez",
+                "comment_text": "Guillermo Ruiz Esparza, son 45-60 min de actividad MODERADA. Ejem: Caminar, andar en bicicleta relax...\n\nPero si, se recomiendan AL MENOS 5 días la ACTIVIDAD MODERADA, llevando una DIETA BALANCEADA BASICA.\n\n\"Atrofiar el músculo\" ya corresponde a la actividad INTENSA (ejem: ciclismo profesional, gym-fitness, ...), según LA OMS, FAO. Esta actividad INTENSA ya requiere una DIETA ESPECIAL. (José Gallegos). Guillermo Ruiz Esparza aquí si ya se REQUIERE DESCANSAR al músculo algunos días a la semana."
+            }
+        ]
+    },
+    {
+        "post_Id": "433671647663076",
+        "total_comments": 0,
+        "comments": []
+    },
+    {
+        "post_Id": "433670684329839",
+        "total_comments": 0,
+        "comments": []
+    },
+    {
+        "post_Id": "433669024330005",
+        "total_comments": 0,
+        "comments": []
+    },
+    {
+        "post_Id": "433665854330322",
+        "total_comments": 0,
+        "comments": []
+    },
+    {
+        "post_Id": "433655667664674",
+        "total_comments": 0,
+        "comments": []
+    },
+    {
+        "post_Id": "431653691198205",
+        "total_comments": 2,
+        "comments": [
+            {
+                "number_comment": 1,
+                "name": "Naty Naty",
+                "comment_text": "Gracias muchas gracias por la información"
+            },
+            {
+                "number_comment": 2,
+                "name": "Lilia Marin",
+                "comment_text": "Claro que si Dra hermosa al pie de la letra 🤩👍"
+            }
+        ]
+    },
+    {
+        "post_Id": "431668664530041",
+        "total_comments": 0,
+        "comments": []
+    },
+    {
+        "post_Id": "431410857889155",
+        "total_comments": 1,
+        "comments": [
+            {
+                "number_comment": 1,
+                "name": "Reyes Juarez",
+                "comment_text": "Si puedo consumir esto \"las uvas, las manzanas y el brócoli\"!"
+            }
+        ]
+    },
+    {
+        "post_Id": "428901301473444",
+        "total_comments": 0,
+        "comments": []
+    },
+    {
+        "post_Id": "428640331499541",
+        "total_comments": 0,
+        "comments": []
+    },
+    {
+        "post_Id": "428620371501537",
+        "total_comments": 1,
+        "comments": [
+            {
+                "number_comment": 1,
+                "name": "Reyes Juarez",
+                "comment_text": "https://www.euro.who.int/en/health-topics/disease-prevention/nutrition/a-healthy-lifestyle/benefits-of-regular-physical-activity\n\nhttps://www.who.int/teams/health-promotion/physical-activity/physical-activity-and-adults\n\nhttps://www.who.int/news-room/fact-sheets/detail/physical-activity"
+            }
+        ]
+    },
+    {
+        "post_Id": "428621541501420",
+        "total_comments": 0,
+        "comments": []
+    },
+    {
+        "post_Id": "424300925266815",
+        "total_comments": 0,
+        "comments": []
+    },
+    {
+        "post_Id": "424298258600415",
+        "total_comments": 0,
+        "comments": []
+    },
+    {
+        "post_Id": "423766621986912",
+        "total_comments": 0,
+        "comments": []
+    },
+    {
+        "post_Id": "423763041987270",
+        "total_comments": 0,
+        "comments": []
+    },
+    {
+        "post_Id": "423755921987982",
+        "total_comments": 1,
+        "comments": [
+            {
+                "number_comment": 1,
+                "name": "Reyes Juarez",
+                "comment_text": "Ver informe de necesidades nutricionales:\nhttp://www.fao.org/3/am401s/am401s03.pdf"
+            }
+        ]
+    },
+    {
+        "post_Id": "423756168654624",
+        "total_comments": 1,
+        "comments": [
+            {
+                "number_comment": 1,
+                "name": "Reyes Juarez",
+                "comment_text": "Ver informe de necesidades nutricionales:\nhttp://www.fao.org/3/am401s/am401s03.pdf"
+            }
+        ]
+    },
+    {
+        "post_Id": "423734751990099",
+        "total_comments": 1,
+        "comments": [
+            {
+                "number_comment": 1,
+                "name": "Reyes Juarez",
+                "comment_text": "Si quieres saber cuántas calorías debes consumir con base a la actividad física que realizas, visita:\n\nhttp://www.imss.gob.mx/salud-en-linea/apps-sano/calculadora-calorias"
+            }
+        ]
+    },
+    {
+        "post_Id": "423715825325325",
+        "total_comments": 1,
+        "comments": [
+            {
+                "number_comment": 1,
+                "name": "Reyes Juarez",
+                "comment_text": "Si quieres saber cuántas calorías debes consumir con base a la actividad física que realizas, visita:\nhttp://www.imss.gob.mx/salud-en-linea/apps-sano/calculadora-calorias"
+            }
+        ]
+    },
+    {
+        "post_Id": "423716961991878",
+        "total_comments": 0,
+        "comments": []
+    },
+    {
+        "post_Id": "420148845682023",
+        "total_comments": 5,
+        "comments": [
+            {
+                "number_comment": 1,
+                "name": "Alvaro Gomez",
+                "comment_text": "Es difícil, espero no imposible"
+            },
+            {
+                "number_comment": 2,
+                "name": "Reyes Juarez",
+                "comment_text": "Sí se puede; sólo se requiere \"afectividad\": darle valor (\"Valuing\") al beneficio de lograr el hábito. (Como dice Benjamin Bloom en su Taxonomía, dominio \"Afectivo\").\n\n¡Motivación por el beneficio!"
+            },
+            {
+                "number_comment": 3,
+                "name": "Daniel De Leon",
+                "comment_text": "Reyes Juarez que nerdos!!"
+            },
+            {
+                "number_comment": 4,
+                "name": "Reyes Juarez",
+                "comment_text": "Daniel De LeonJust trying to share \"scientific knowledge\" in a colloquial language!"
+            },
+            {
+                "number_comment": 5,
+                "name": "Cecilia Olvera",
+                "comment_text": "Todo se puede si te quieres mucho"
+            }
+        ]
+    },
+    {
+        "post_Id": "420250999005141",
+        "total_comments": 3,
+        "comments": [
+            {
+                "number_comment": 1,
+                "name": "Cecilia Olvera",
+                "comment_text": "Saludos maestro mui bien todo esto"
+            },
+            {
+                "number_comment": 2,
+                "name": "Reyes Juarez",
+                "comment_text": "Que bueno que esta información sea útil para el público.\n\nAl informar, estamos cumpliendo con nuestra responsabilidad como ingenieros, científicos."
+            },
+            {
+                "number_comment": 3,
+                "name": "Cecilia Olvera",
+                "comment_text": "Reyes Juarez claro mui importante todo muchas grasias maestro por preocuparse por los demás"
+            }
+        ]
+    },
+    {
+        "post_Id": "421611312202443",
+        "total_comments": 1,
+        "comments": [
+            {
+                "number_comment": 1,
+                "name": "Cecilia Olvera",
+                "comment_text": "Si claro es lo más delisioso me encantan estos platillos"
+            }
+        ]
+    },
+    {
+        "post_Id": "421608808869360",
+        "total_comments": 0,
+        "comments": []
+    },
+    {
+        "post_Id": "419434915753416",
+        "total_comments": 1,
+        "comments": [
+            {
+                "number_comment": 1,
+                "name": "Maria Teresa Viana",
+                "comment_text": "De acuerdo a la OMS, Aunque ningún alimento ni suplemento dietético puede prevenir ni curar la COVID-19, una alimentación saludable es importante para el buen funcionamiento del sistema inmunitario. La nutrición adecuada también puede reducir la probabilidad de aparición de otros problemas de salud como la obesidad, las enfermedades del corazón, la diabetes y algunos tipos de cáncer."
+            }
+        ]
+    },
+    {
+        "post_Id": "420060085690899",
+        "total_comments": 1,
+        "comments": [
+            {
+                "number_comment": 1,
+                "name": "Maria Teresa Viana",
+                "comment_text": "lo mas verde posible"
+            }
+        ]
+    },
+    {
+        "post_Id": "420161619014079",
+        "total_comments": 0,
+        "comments": []
+    },
+    {
+        "post_Id": "418663769163864",
+        "total_comments": 6,
+        "comments": [
+            {
+                "number_comment": 1,
+                "name": "Reyes Juarez",
+                "comment_text": "Dra Maria Teresa Viana, entonces los frijoles deben formar parte de nuestra dieta de la semana, al igual que las tortillas?"
+            },
+            {
+                "number_comment": 2,
+                "name": "Maria Teresa Viana",
+                "comment_text": "Reyes Juarez claro que si, frijoles y tortillas para completar una buena dieta"
+            },
+            {
+                "number_comment": 3,
+                "name": "Ma Elena Zermeño Espinosa",
+                "comment_text": "Maria Teresa Viana ¿Existe algún límite de consumo diario Dra. Viana?"
+            },
+            {
+                "number_comment": 4,
+                "name": "Reyes Juarez",
+                "comment_text": "Ma Elena Zermeño Espinosa Maria Teresa Viana, ya se me antojaron los frijoles!"
+            },
+            {
+                "number_comment": 5,
+                "name": "Ma Elena Zermeño Espinosa",
+                "comment_text": "Reyes Juarez Sí, con jocoque y salsa de molcajete :)"
+            },
+            {
+                "number_comment": 6,
+                "name": "Maria Teresa Viana",
+                "comment_text": "Ma Elena Zermeño Espinosa Por supuesto, no hay que excederse, todo con medida"
+            }
+        ]
+    },
+    {
+        "post_Id": "419454899084751",
+        "total_comments": 0,
+        "comments": []
+    },
+    {
+        "post_Id": "418852435811664",
+        "total_comments": 0,
+        "comments": []
+    },
+    {
+        "post_Id": "418834839146757",
+        "total_comments": 0,
+        "comments": []
+    },
+    {
+        "post_Id": "418796395817268",
+        "total_comments": 0,
+        "comments": []
+    },
+    {
+        "post_Id": "418733209156920",
+        "total_comments": 0,
+        "comments": []
+    },
+    {
+        "post_Id": "418733009156940",
+        "total_comments": 0,
+        "comments": []
+    }
+]
