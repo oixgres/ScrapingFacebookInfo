@@ -3,16 +3,13 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 from element_html import *
+from dato import *
 import time
 import re
 import json
 class Facebook_Scraper_POST:
 
-    POST_URL =[]
-    POST_ID =[]
-    POSTER_NAME =[]
-    USER_ID = []
-    POSTER_TEXT=[]
+
 
 
 
@@ -34,43 +31,59 @@ class Facebook_Scraper_POST:
         iniciar_seccion_no_toque.click()
 
 
-    def collectionPOST_URL_and_POST_ID(self,URL,number_POST):
+    def collectionPOST(self,URL,number_POST):
+
+        POST_URL =[]
+        POST_ID =[]
+        POSTER_NAME =[]
+        POSTER_TEXT=[]
+
         index=0
         self.driver.get(URL)                                                 # acceder la pagina del grupo
         self.scroll_max()                                                    # mostrar todas las publicaciones
         
         links = self.driver.find_elements_by_xpath(ARTICLE_LINK_XPATH)    # Encontrar todos elementos article(enlace de la publicacion)
        
-        if len(links)>=number_POST:                                          # Obtener los post basando en el number_POST
-            for link in range(number_POST):
-                js_script="return document.getElementsByTagName('article')["+str(index)+"].dataset.store"
-                self.POST_URL.append(str(links[link].get_attribute('href').split('?')[0]))
-                data_post = self.driver.execute_script(js_script)
-                self.POST_ID.append(re.findall(r"top_level_post_id.(.+?):",str(data_post))[0])
-                print(self.POST_ID[index])
-                index+=1
+        if number_POST>len(links):   
+            number_POST=len(links)                                      # Obtener los post basando en el number_POST
+        for link in range(number_POST):
+            js_script="return document.getElementsByTagName('article')["+str(index)+"].dataset.store"
+            POST_URL.append(str(links[link].get_attribute('href').split('?')[0]))
+            data_post = self.driver.execute_script(js_script)
+            POST_ID.append(re.findall(r"top_level_post_id.(.+?):",str(data_post))[0])
+
+            print(POST_ID[index])
+
+            index+=1
+        for index in range(number_POST):
+            self.driver.get(POST_URL[index])
+            try:
+                poster_text=self.driver.find_element_by_xpath(POST_TEXT_XPATH)
+                POSTER_TEXT.append(poster_text.text)
+            except NoSuchElementException:
+                POSTER_TEXT.append("No hay texto")
+            poster_name=self.driver.find_element_by_xpath(POSTER_NAME_XPATH)
+            POSTER_NAME.append(poster_name.text)
+            
+
+        
+        data=[]
+        for index in range(len(POST_URL)):
+            element={}
+            element["link"]=POST_URL[index]
+            element["poster_name"]=POSTER_NAME[index]
+            element["post_id"]=POST_ID[index]
+            element["post_text"]=POSTER_TEXT[index]
+            data.append(element)
+                  
+        return data
                 
-        else:
-            index=0
-            for link in links:
-                js_script="return document.getElementsByTagName('article')["+str(index)+"].dataset.store"
-                self.POST_URL.append(str(link.get_attribute('href').split('?')[0]))
-                data_post = self.driver.execute_script(js_script)
-                self.POST_ID.append(re.findall(r"top_level_post_id.(.+?):",str(data_post))[0])
-                index+=1
+        
                 
 
         
 
-    def Collection_Text_POST(self,number_POST):
-        if number_POST>len(self.POST_URL):
-            number_POST=len(self.POST_URL)
-        for index in range(number_POST):
-            self.driver.get(self.POST_URL[index])
-            poster_text=self.driver.find_element_by_xpath(POST_TEXT_XPATH)
-            poster_name=self.driver.find_element_by_xpath(POSTER_NAME_XPATH)
-            self.POSTER_NAME.append(poster_name.text)
-            self.POSTER_TEXT.append(poster_text.text)
+
 
     def generateJson (self,file):
         file = open(file,'w+',encoding="utf-8")
@@ -81,7 +94,7 @@ class Facebook_Scraper_POST:
             element={}
             element["link"]=self.POST_URL[index]
             element["poster_name"]=self.POSTER_NAME[index]
-            element["post_ID"]=self.POST_ID[index]
+            element["post_id"]=self.POST_ID[index]
             element["post_text"]=self.POSTER_TEXT[index]
             data.append(element)
                   
@@ -95,9 +108,9 @@ class Facebook_Scraper_POST:
     # @parameter file string
     # @parameter type_user string visited_name shared_name liked_name
 
-    def test_User_names(self,POST_ID,URL_type,file,type_names):
-        URL=URL_type+str(POST_ID)
-        self.driver.get(URL)
+    def test_User_names(self,POST_ID,URL_type,type_names):
+        url=URL_type+str(POST_ID)
+        self.driver.get(url)
         
         t=True
         json_data={} 
@@ -123,9 +136,7 @@ class Facebook_Scraper_POST:
                 print(name.text)
         json_data["number"]=len(visited_names)
         json_data[type_names]=visited_names
-        file = open(file,'w+',encoding="utf-8")
-        json.dump(json_data,file,indent=4, ensure_ascii=False)
-        file.close()
+        return json_data
         
     
     
@@ -144,8 +155,10 @@ class Facebook_Scraper_POST:
 
 
     # https://m.facebook.com/story.php?story_fbid=2765539700363999&id=1629107234007257&anchor_composer=false
-    def test_comment_POST(self,URL):
-        self.scroll_to_max_height_comment(URL)
+    def test_comment_POST(self,post_id):
+        url=URL_POST_LINK+str(post_id)
+        self.driver.get(url)
+        self.scroll_to_max_height_comment()
         self.see_comments_secondary(SEE_COMMENTS_SECONDARY_CLASS_NAME)
         boxs = self.driver.find_elements_by_xpath("//div[@class='_2b04']") 
         json_post_comments={}
@@ -165,12 +178,10 @@ class Facebook_Scraper_POST:
                 print("usuario no capturado por uso de gif")
                 pass
         #json_post_comment['post_id']=post_id
+        json_post_comments['post_Id']=post_id
         json_post_comments['total_comments']=num_comment
         json_post_comments['comments']=comments
-        file = open('post_comments.json','w+',encoding="utf-8")
-        json.dump(json_post_comments,file,indent=4, ensure_ascii=False)
-        file.close()
-        
+        return json_post_comments
 
     
     def see_comments_secondary(self,class_name):
@@ -191,8 +202,8 @@ class Facebook_Scraper_POST:
                     pass
 
 
-    def scroll_to_max_height_comment(self,URL):
-        self.driver.get(URL)
+    def scroll_to_max_height_comment(self):
+
         t=True
         while t:
             try:
