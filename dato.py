@@ -1,5 +1,5 @@
 user =["mozi66.feng@gmail.com","axmoroigres@gmail.com"]
-password = ["958674","12JEFF34"]
+password = ["958674","958674"]
 
 
 URL_LOGIN ="https://mbasic.facebook.com/"

@@ -22,7 +22,7 @@ if __name__ == "__main__":
     #PATH ="C:/Users/fhaos/Documents/FCQI/8mo/ayundantia/chromedriver.exe"
     PATH = "chromedriver.exe"
     h = Facebook_Scraper_POST(PATH)
-    h.loginSession(URL=URL_LOGIN,user=user[1],password=password[1])
+    h.loginSession(URL=URL_LOGIN,user=user[0],password=password[0])
     # h.test_comment_POST(URL='https://m.facebook.com/groups/413938496303058/permalink/469954730701434/')
 
     #obtener las informaciones de post 
@@ -46,19 +46,30 @@ if __name__ == "__main__":
     # writeJson(list_liked_people,'people_liked.json')
 
     # # obtener las personas son visitados
+    
+    '''
     list_visited_people=[]
     for num_post in range(len(json_post)):
         post_visited_name=h.test_User_names(json_post[num_post]['post_id'],URL_VISITED,"visited_names")
         list_visited_people.append(post_visited_name)
     writeJson(list_visited_people,'people_visited.json')
 
-    # # obtener comentariops
+    # # obtener comentarios
     list_comments_post=[]
     for num_post in range(len(json_post)):
         comment_post = h.test_comment_POST(json_post[num_post]['post_id'])
         list_comments_post.append(comment_post)
     writeJson(list_comments_post,'post_comments.json')
 
+    
+    list_likes_people=[]
+    for num_post in range(len(json_post)):
+        post_likes_people = h.test_User_names(json_post[num_post]['post_id'], URL_LIKED, "liked_names")
+        list_likes_people.append(post_likes_people)
+    writeJson(list_likes_people, 'people_likes.json')
+    '''
+    
+    h.get_reactions(json_post[1]['post_id'], URL_LIKED)
     #h.driver.quit()
 
 

@@ -10,9 +10,6 @@ import json
 class Facebook_Scraper_POST:
 
 
-
-
-
     def __init__(self,path):
         self.driver = webdriver.Chrome(path)
 
@@ -66,8 +63,6 @@ class Facebook_Scraper_POST:
             POSTER_NAME.append(poster_name.text)
             time.sleep(1)
             
-
-        
         data=[]
         for index in range(len(POST_URL)):
             element={}
@@ -79,13 +74,6 @@ class Facebook_Scraper_POST:
                   
         return data
                 
-        
-                
-
-        
-
-
-
     def generateJson (self,file):
         file = open(file,'w+',encoding="utf-8")
         data=[]
@@ -138,9 +126,22 @@ class Facebook_Scraper_POST:
         json_data["number"]=len(visited_names)
         json_data[type_names]=visited_names
         return json_data
+    
+    def get_reactions(self, POST_ID, URL_type):
+        url = URL_type+str(POST_ID)
+        self.driver.get(url)
         
-    
-    
+        
+        
+        
+        for button in self.driver.find_elements_by_xpath(PRUEBA):
+            print('boton presionado')
+            button.click()
+            time.sleep(2)
+                
+        print("prueba finalizada")
+                
+        
     def scroll_max(self):
         t = True
         while t:
@@ -152,7 +153,6 @@ class Facebook_Scraper_POST:
             scrollHeight_scrolled=self.driver.execute_script("return document.body.scrollHeight;")
             if scrollHeight_scrolled==scrollHeight_now:
                 t=False
-
 
 
     # https://m.facebook.com/story.php?story_fbid=2765539700363999&id=1629107234007257&anchor_composer=false
@@ -190,7 +190,6 @@ class Facebook_Scraper_POST:
             bton.click()
             time.sleep(0.5)
 
-
     def see_past_comment(self,web_elements):
         for web_element in web_elements:
             t=True
@@ -201,7 +200,6 @@ class Facebook_Scraper_POST:
                 except NoSuchElementException:  
                     t=False
                     pass
-
 
     def scroll_to_max_height_comment(self):
 
