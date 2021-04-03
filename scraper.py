@@ -22,13 +22,13 @@ if __name__ == "__main__":
     #PATH ="C:/Users/fhaos/Documents/FCQI/8mo/ayundantia/chromedriver.exe"
     PATH = "chromedriver.exe"
     h = Facebook_Scraper_POST(PATH)
-    h.loginSession(URL=URL_LOGIN,user=user[0],password=password[0])
+    h.loginSession(URL=URL_LOGIN,user=user[2],password=password[2])
     # h.test_comment_POST(URL='https://m.facebook.com/groups/413938496303058/permalink/469954730701434/')
-
+    h.test_comment_secondary(url='https://m.facebook.com/story.php?story_fbid=2768196876764948&id=1629107234007257&anchor_composer=false')
     #obtener las informaciones de post 
-    json_post=h.collectionPOST(URL_GROUP,5)
-    writeJson(json_post,'post.json')
-    json_post=readJson('post.json')
+    # json_post=h.collectionPOST(URL_GROUP,5)
+    # writeJson(json_post,'post.json')
+    # json_post=readJson('post.json')
     
     
     # obtener las persona compartidas
@@ -69,7 +69,7 @@ if __name__ == "__main__":
     writeJson(list_likes_people, 'people_likes.json')
     '''
     
-    h.get_reactions(json_post[1]['post_id'], URL_LIKED)
+    #h.get_reactions(json_post[1]['post_id'], URL_LIKED)
     #h.driver.quit()
 
 
