@@ -187,53 +187,53 @@ class Facebook_Scraper_POST:
     def test_comment_secondary(self,url):
         errors ={}
         self.driver.get(url)
-        #self.see_comments_secondary(SEE_COMMENTS_SECONDARY_CLASS_NAME)
+        self.see_comments_secondary(SEE_COMMENTS_SECONDARY_CLASS_NAME)
         full_comments_boxs=self.driver.find_elements_by_css_selector('div._2a_i._2a_l> div._2b04 ')
         print(len(full_comments_boxs))
         full_comments_box=self.driver.find_elements_by_css_selector('div._2a_i > div._2b04  ' )
         print(len(full_comments_box))
 
-        # full_comments_boxs=self.driver.find_elements_by_css_selector('div._2a_i._2a_l> div._2b04')       # obtener la caja de comentarios
-        # print("cantidad de comentarios multinivel:"+str(len(full_comments_boxs)))
-        # for full_comments_box in full_comments_boxs:
-        #     try:
-        #         first_commenter= full_comments_box.find_element_by_css_selector(' div._2b06 >div')                                    # obtener la primera informacion de primer comentarios
-        #         first_comment=full_comments_box.find_element_by_css_selector('div._2b06 >div:nth-child(2)')
-        #         first_etiqueta=full_comments_box.find_element_by_css_selector('div._2b06 >div:nth-child(2)>a')
-        #         print('--------comentario primario--------')
-        #         print("name:"+str(first_commenter.text))
-        #      #   print("to:"+str(first_etiqueta.text))
-        #         print("comment:"+str(first_comment.text))
-        #         print(str(first_comment.get_attribute('data-commentid')))
+        full_comments_boxs=self.driver.find_elements_by_css_selector('div._2a_i._2a_l> div._2b04')       # obtener la caja de comentarios
+        print("cantidad de comentarios multinivel:"+str(len(full_comments_boxs)))
+        for full_comments_box in full_comments_boxs:
+            try:
+                first_commenter= full_comments_box.find_element_by_css_selector(' div._2b06 >div')                                    # obtener la primera informacion de primer comentarios
+                first_comment=full_comments_box.find_element_by_css_selector('div._2b06 >div:nth-child(2)')
+                first_etiqueta=full_comments_box.find_element_by_css_selector('div._2b06 >div:nth-child(2)>a')
+                print('--------comentario primario--------')
+                print("name:"+str(first_commenter.text))
+             #   print("to:"+str(first_etiqueta.text))
+                print("comment:"+str(first_comment.text))
+                print(str(first_comment.get_attribute('data-commentid')))
 
-        #         try:
-        #             comment_boxs=full_comments_box.find_elements_by_css_selector('div._2a_m > div._2b1k > div._2a_i') 
-        #             print("contiene:"+str(len(comment_boxs)))
-        #             for box in comment_boxs:
-        #                 answer_box = box.find_element_by_css_selector('div._2b04 > div._14v5 > div._2b06 ')
-        #                 answer_username=answer_box.find_element_by_css_selector('div._2b05')
-        #                 comment = answer_box.find_element_by_css_selector('div:nth-child(2)')
-        #                 to = answer_box.find_element_by_css_selector('div:nth-child(2) > a')
-        #                 print('--------comentario secundario-------')
-        #                 print('name:'+str(answer_username.text))
-        #                 print('comment:'+str(comment.text[len(to.text)+1:]))
-        #                 print('to:'+str(to.text))
-        #                 print('---------------------------')
-        #         except NoSuchElementException:
-        #             print("no hay comentarios secundarios")
-        #             pass
-        #     except NoSuchElementException:
-        #         print(errors)
+                try:
+                    comment_boxs=full_comments_box.find_elements_by_css_selector('div._2a_m > div._2b1k > div._2a_i') 
+                    print("contiene:"+str(len(comment_boxs)))
+                    for box in comment_boxs:
+                        answer_box = box.find_element_by_css_selector('div._2b04 > div._14v5 > div._2b06 ')
+                        answer_username=answer_box.find_element_by_css_selector('div._2b05')
+                        comment = answer_box.find_element_by_css_selector('div:nth-child(2)')
+                        to = answer_box.find_element_by_css_selector('div:nth-child(2) > a')
+                        print('--------comentario secundario-------')
+                        print('name:'+str(answer_username.text))
+                        print('comment:'+str(comment.text[len(to.text)+1:]))
+                        print('to:'+str(to.text))
+                        print('---------------------------')
+                except NoSuchElementException:
+                    print("no hay comentarios secundarios")
+                    pass
+            except NoSuchElementException:
+                print(errors)
 
-        # for full_comments_box in full_comments_boxs:
-        #     first_commenter= full_comments_box.find_element_by_css_selector(' div._2b06 >div')                                    # obtener la primera informacion de primer comentarios
-        #     first_comment=full_comments_box.find_element_by_css_selector('div._2b06 >div:nth-child(2)')
-        #     #first_etiqueta=full_comments_box.find_element_by_css_selector('div._2b06 >div:nth-child(2)>a')
-        #     print('--------comentario primario--------')
-        #     print("name:"+str(first_commenter.text))
-        # #   print("to:"+str(first_etiqueta.text))
-        #     print("comment:"+str(first_comment.text))
-        #     print(str(first_comment.get_attribute('data-commentid')))
+        for full_comments_box in full_comments_boxs:
+            first_commenter= full_comments_box.find_element_by_css_selector(' div._2b06 >div')                                    # obtener la primera informacion de primer comentarios
+            first_comment=full_comments_box.find_element_by_css_selector('div._2b06 >div:nth-child(2)')
+            #first_etiqueta=full_comments_box.find_element_by_css_selector('div._2b06 >div:nth-child(2)>a')
+            print('--------comentario primario--------')
+            print("name:"+str(first_commenter.text))
+        #   print("to:"+str(first_etiqueta.text))
+            print("comment:"+str(first_comment.text))
+            print(str(first_comment.get_attribute('data-commentid')))
 
 
 
