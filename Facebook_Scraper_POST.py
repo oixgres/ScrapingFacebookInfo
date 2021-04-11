@@ -131,15 +131,46 @@ class Facebook_Scraper_POST:
         url = URL_type+str(POST_ID)
         self.driver.get(url)
         
+        result = []
+         
+        #Creamos una copia por que los cortaremos y no queremos perder los datos
+        allReactionsIDArray = ALL_REACTIONS_ID.copy()
+        allReactionsXPathArray = ALL_REACTIONS_XPATH.copy()
+        allReactionsNameArray = ALL_REACTIONS_NAME.copy()
         
         
-        
-        for button in self.driver.find_elements_by_xpath(PRUEBA):
-            print('boton presionado')
+        #Damos click de reaccion en reaccion
+        for button in self.driver.find_elements_by_xpath(REACTION_BUTTON_XPATH):
             button.click()
-            time.sleep(2)
-                
-        print("prueba finalizada")
+            time.sleep(1)  
+            index = 0
+            
+            #Identificamos cual reaccion es a la que le dimos click
+            for path in allReactionsXPathArray:
+                #Verificamos que exista la reaccion
+                if self.driver.find_elements_by_id(allReactionsIDArray[index]):
+                    #Verificamos que este desplegada la info de la reaccion
+                    if self.driver.find_elements_by_xpath(allReactionsXPathArray[index]):
+                        reaction_names = []
+                        reaction_names.append(allReactionsNameArray[index])
+                        list_name = self.driver.find_elements_by_xpath(allReactionsXPathArray[index])
+                        
+                        #Transformamos los nombres de quienes reaccionaron a texto
+                        for name in list_name:
+                            if len(name.text) > 0:
+                                reaction_names.append(name.text)
+                                
+                        result.append(reaction_names)
+                            
+                        #Quitamos lo ya encontrado para no repetir busquedas
+                        allReactionsXPathArray.pop(index)
+                        allReactionsNameArray.pop(index)
+                        allReactionsIDArray.pop(index)
+                        
+                        break;
+                index+=1
+        print(result)
+        
                 
         
     def scroll_max(self):

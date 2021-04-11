@@ -12,21 +12,36 @@ SEE_COMMENTS_SECONDARY_CLASS_NAME = '_4ayk'
 LIST_NAME_XPATH = "//span/strong"
 
 
-#PRUEBA = '_5p-9 _5p-l'
-PRUEBA = "//div/div/span/span"
-#_5p-o _10tm hidden_elem necesito dar clicl en estos elemenos
+#REACCIONES
+REACTION_BUTTON_XPATH = "//div/div/span/span"
 
-#Al dar click obtengo estos:
-    
-#_5p-o hidden_elem
-#_5p-o
 
+#total              reaction_profile_browser
 #likes =            reaction_profile_browser1
 #corazon =          reaction_profile_browser2
 #asombra =          reaction_profile_browser3
 #JAJA =             reaction_profile_browser4
 #triste =           reaction_profile_browser7
 #enojo =            reaction_profile_browser8
-#Me encotazona =    reaction_profile_browser16
-
-#clase de los botones = _5p-9 _5p-l
+#Me encorazona =    reaction_profile_browser16
+ALL_REACTIONS_NAME = ["TOTAL", "LIKE", "LOVE", "WOW", "HAHA", "SAD", "ANGRY","CARE"]
+ALL_REACTIONS_ID=[
+    "reaction_profile_browser",
+    "reaction_profile_browser1",
+    "reaction_profile_browser2",
+    "reaction_profile_browser3",
+    "reaction_profile_browser4",
+    "reaction_profile_browser7",
+    "reaction_profile_browser8",
+    "reaction_profile_browser16",
+    ]
+ALL_REACTIONS_XPATH=[
+    "//div[@id='reaction_profile_browser']/div/div/div/div/a/div/span/span/strong",
+    "//div[@id='reaction_profile_browser1']/div/div/div/div/a/div/span/span/strong",
+    "//div[@id='reaction_profile_browser2']/div/div/div/div/a/div/span/span/strong",
+    "//div[@id='reaction_profile_browser3']/div/div/div/div/a/div/span/span/strong",
+    "//div[@id='reaction_profile_browser4']/div/div/div/div/a/div/span/span/strong",
+    "//div[@id='reaction_profile_browser7']/div/div/div/div/a/div/span/span/strong",
+    "//div[@id='reaction_profile_browser8']/div/div/div/div/a/div/span/span/strong",
+    "//div[@id='reaction_profile_browser16']/div/div/div/div/a/div/span/span/strong"
+    ]
