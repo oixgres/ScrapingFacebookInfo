@@ -45,22 +45,31 @@ class Facebook_Scraper_POST:
             number_POST=len(links)                                      # Obtener los post basando en el number_POST
         for link in range(number_POST):
             js_script="return document.getElementsByTagName('article')["+str(index)+"].dataset.store"
-            POST_URL.append(str(links[link].get_attribute('href').split('?')[0]))
+            #POST_URL.append(str(links[link].get_attribute('href').split('?')[0]))
+            
+            
+            
             data_post = self.driver.execute_script(js_script)
             POST_ID.append(re.findall(r"top_level_post_id.(.+?):",str(data_post))[0])
-
+            POST_URL.append(URL_POST_LINK+str(POST_ID[index]))
             print(POST_ID[index])
 
             index+=1
         for index in range(number_POST):
             self.driver.get(POST_URL[index])
+            print("Buscando: "+POST_URL[index])
             try:
                 poster_text=self.driver.find_element_by_xpath(POST_TEXT_XPATH)
                 POSTER_TEXT.append(poster_text.text)
             except NoSuchElementException:
                 POSTER_TEXT.append("No hay texto")
-            poster_name=self.driver.find_element_by_xpath(POSTER_NAME_XPATH)
-            POSTER_NAME.append(poster_name.text)
+                
+            try:
+                poster_name=self.driver.find_element_by_xpath(POSTER_NAME_XPATH)
+                POSTER_NAME.append(poster_name.text)
+            except NoSuchElementException:
+                print("ERROR")
+            
             time.sleep(1)
             
         data=[]
