@@ -45,3 +45,14 @@ ALL_REACTIONS_XPATH=[
     "//div[@id='reaction_profile_browser8']/div/div/div/div/a/div/span/span/strong",
     "//div[@id='reaction_profile_browser16']/div/div/div/div/a/div/span/span/strong"
     ]
+
+#COMENTARIOS
+ONLY_COMMENT = "//div[@class='_333v _45kb']/div/div[2]/div[1]/div/div[2]"
+'''
+Comentarios sin respuestas 
+"//div[@class="_333v _45kb"]/div/div[2]/div[1]/div/div[2]/div"         div[@data-sigil="comment-body"]"
+
+class="_2a_i"
+
+
+'''

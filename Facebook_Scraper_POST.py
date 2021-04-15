@@ -268,9 +268,24 @@ class Facebook_Scraper_POST:
         # #   print("to:"+str(first_etiqueta.text))
         #     print("comment:"+str(first_comment.text))
         #     print(str(first_comment.get_attribute('data-commentid')))
+    
+    def getComments(self, url):
+        self.driver.get(url)
+        self.see_comments_secondary(SEE_COMMENTS_SECONDARY_CLASS_NAME)
+        
+        if self.driver.find_elements_by_xpath(ONLY_COMMENT):
+            comments = self.driver.find_elements_by_xpath(ONLY_COMMENT)
+            for comment in comments:
+                print(comment.text)
+        else:
+            print("no encontre nada prro")
+        
+        
+        
+        
 
 
-
+    #Da click a todos los comentarios secundarios
     def see_comments_secondary(self,class_name):
         for bton in self.driver.find_elements_by_class_name(class_name):
             bton.click()
