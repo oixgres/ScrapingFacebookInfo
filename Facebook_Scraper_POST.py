@@ -228,8 +228,13 @@ class Facebook_Scraper_POST:
         errors ={}
         self.driver.get(url)
         self.see_comments_secondary(SEE_COMMENTS_SECONDARY_CLASS_NAME)
+        full_comments_boxs=self.driver.find_elements_by_css_selector('div._2a_i._2a_l> div._2b04 ')
+        print(len(full_comments_boxs))
+        full_comments_box=self.driver.find_elements_by_css_selector('div._2a_i > div._2b04  ' )
+        print(len(full_comments_box))
 
         full_comments_boxs=self.driver.find_elements_by_css_selector('div._2a_i._2a_l> div._2b04')       # obtener la caja de comentarios
+        print("cantidad de comentarios multinivel:"+str(len(full_comments_boxs)))
         for full_comments_box in full_comments_boxs:
             try:
                 first_commenter= full_comments_box.find_element_by_css_selector(' div._2b06 >div')                                    # obtener la primera informacion de primer comentarios
@@ -242,7 +247,8 @@ class Facebook_Scraper_POST:
                 print(str(first_comment.get_attribute('data-commentid')))
 
                 try:
-                    comment_boxs=full_comments_box.find_elements_by_css_selector('div._2a_m > div._2b1k>div._2a_i') 
+                    comment_boxs=full_comments_box.find_elements_by_css_selector('div._2a_m > div._2b1k > div._2a_i') 
+                    print("contiene:"+str(len(comment_boxs)))
                     for box in comment_boxs:
                         answer_box = box.find_element_by_css_selector('div._2b04 > div._14v5 > div._2b06 ')
                         answer_username=answer_box.find_element_by_css_selector('div._2b05')
@@ -258,6 +264,7 @@ class Facebook_Scraper_POST:
                     pass
             except NoSuchElementException:
                 print(errors)
+
         # full_comments_boxs=self.driver.find_elements_by_css_selector('div._2a_i> div._2b04')
         # for full_comments_box in full_comments_boxs:
         #     first_commenter= full_comments_box.find_element_by_css_selector(' div._2b06 >div')                                    # obtener la primera informacion de primer comentarios
@@ -297,7 +304,6 @@ class Facebook_Scraper_POST:
                         print("\t\t"+names[0].text+":")
                         print("\t\t"+answer.text+"\n")
                         names.pop(0)
-        
 
     #Da click a todos los comentarios secundarios
     def see_comments_secondary(self,class_name):
