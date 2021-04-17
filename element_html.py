@@ -47,12 +47,9 @@ ALL_REACTIONS_XPATH=[
     ]
 
 #COMENTARIOS
-ONLY_COMMENT = "//div[@class='_333v _45kb']/div/div[2]/div[1]/div/div[2]"
-'''
-Comentarios sin respuestas 
-"//div[@class="_333v _45kb"]/div/div[2]/div[1]/div/div[2]/div"         div[@data-sigil="comment-body"]"
-
-class="_2a_i"
+COMMENT_BOX = "//div[@class='_333v _45kb']/div"
+MAIN_COMMENT = ".//div[2]/div[1]/div/div[2]"
+SEC_COMMENT = ".//div[3]/div[1]/div/div[2]/div[1]/div/div[2]"
+NAMES_COMMENT = "//div[@class='_2b06']/div[@class='_2b05']/a"
 
 
-'''

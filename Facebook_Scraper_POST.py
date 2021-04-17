@@ -273,17 +273,31 @@ class Facebook_Scraper_POST:
         self.driver.get(url)
         self.see_comments_secondary(SEE_COMMENTS_SECONDARY_CLASS_NAME)
         
-        if self.driver.find_elements_by_xpath(ONLY_COMMENT):
-            comments = self.driver.find_elements_by_xpath(ONLY_COMMENT)
-            for comment in comments:
-                print(comment.text)
-        else:
-            print("no encontre nada prro")
+        #Caja de comentarios
+        box = self.driver.find_elements_by_xpath(COMMENT_BOX)
+        names = self.driver.find_elements_by_xpath(NAMES_COMMENT)
         
+        if box:
+            for comment in box:
+                #Comentarios principales
+                main = comment.find_elements_by_xpath(MAIN_COMMENT)
+                if main:
+                    print(names[0].text+":")
+                    print(main[0].text+"\n")
+                else:
+                    print(names[0].text+":")
+                    print("IMAGEN O GIF \n")
+                    
+                names.pop(0)
+                
+                #Respuestas
+                answers = comment.find_elements_by_xpath(SEC_COMMENT)
+                if answers:
+                    for answer in answers:
+                        print("\t\t"+names[0].text+":")
+                        print("\t\t"+answer.text+"\n")
+                        names.pop(0)
         
-        
-        
-
 
     #Da click a todos los comentarios secundarios
     def see_comments_secondary(self,class_name):
