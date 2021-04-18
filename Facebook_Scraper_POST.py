@@ -290,7 +290,8 @@ class Facebook_Scraper_POST:
                 main = comment.find_elements_by_xpath(MAIN_COMMENT)
                 if main:
                     print(names[0].text+":")
-                    print(main[0].text+"\n")
+                    print(main[0].text)
+                    
                 else:
                     print(names[0].text+":")
                     print("IMAGEN O GIF \n")
@@ -301,8 +302,13 @@ class Facebook_Scraper_POST:
                 answers = comment.find_elements_by_xpath(SEC_COMMENT)
                 if answers:
                     for answer in answers:
+                        
                         print("\t\t"+names[0].text+":")
-                        print("\t\t"+answer.text+"\n")
+                        print("\t\t"+answer.text+"")
+                        try :
+                            print("\t\tto:"+answer.find_element_by_css_selector('a').text+'\n')
+                        except  NoSuchElementException:
+                            pass
                         names.pop(0)
 
     #Da click a todos los comentarios secundarios
