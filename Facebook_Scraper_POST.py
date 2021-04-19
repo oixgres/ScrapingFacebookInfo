@@ -290,12 +290,13 @@ class Facebook_Scraper_POST:
                 main = comment.find_elements_by_xpath(MAIN_COMMENT)
                 if main:
                     print(names[0].text+":")
-                    print(main[0].text)
+                    to=self.getToName(main[0])
+                    print(main[0].text[len(to)+1:])
+                    print("To:"+to+'\n')
                     
                 else:
                     print(names[0].text+":")
-                    print("IMAGEN O GIF \n")
-                    
+                    print("IMAGEN O GIF ")
                 names.pop(0)
                 
                 #Respuestas
@@ -304,19 +305,27 @@ class Facebook_Scraper_POST:
                     for answer in answers:
                         
                         print("\t\t"+names[0].text+":")
-                        print("\t\t"+answer.text+"")
-                        try :
-                            print("\t\tto:"+answer.find_element_by_css_selector('a').text+'\n')
-                        except  NoSuchElementException:
-                            pass
+                        to=self.getToName(answer)
+                        print("\t\t"+answer.text[len(to)+1:]+"")
+                        print("\t\tTo:"+to+'\n')
                         names.pop(0)
                 else:
                     answers = comment.find_elements_by_xpath(SEC_COMMENT_GIF)
                     for answer in answers:
                         print("\t\t"+names[0].text+":")
-                        print("\t\t"+answer.text+"\n")
+                        to=self.getToName(answer)
+                        print("\t\t"+answer.text[len(to)+1:]+"")
+                        print("\t\tTo:"+to+'\n')
                         names.pop(0)
+                
 
+    def getToName(self,webElement):
+        name='None'
+        try :
+            name=webElement.find_element_by_css_selector('a').text       
+        except  NoSuchElementException:
+            pass
+        return name
     #Da click a todos los comentarios secundarios
     def see_comments_secondary(self,class_name):
         for bton in self.driver.find_elements_by_class_name(class_name):
