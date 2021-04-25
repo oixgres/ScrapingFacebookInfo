@@ -288,6 +288,9 @@ class Facebook_Scraper_POST:
             for comment in box:
                 #Comentarios principales
                 main = comment.find_elements_by_xpath(MAIN_COMMENT)
+                
+                if names == []:
+                    break; 
 
                 if main:
                     print(names[0].text+":")
@@ -296,11 +299,8 @@ class Facebook_Scraper_POST:
                     print("To:"+to+'\n')
 
                 else:
-                    if names != []:
-                        print(names[0].text+":")
-                        print("IMAGEN O GIF ")
-                    else:
-                        break;
+                    print(names[0].text+":")
+                    print("IMAGEN O GIF ")
 
                 names.pop(0)
 
@@ -308,7 +308,6 @@ class Facebook_Scraper_POST:
                 answers = comment.find_elements_by_xpath(SEC_COMMENT)
                 if answers:
                     for answer in answers:
-
                         print("\t\t"+names[0].text+":")
                         to=self.getToName(answer)
                         print("\t\t"+answer.text[len(to)+1:]+"")
