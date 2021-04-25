@@ -288,12 +288,16 @@ class Facebook_Scraper_POST:
             for comment in box:
                 #Comentarios principales
                 main = comment.find_elements_by_xpath(MAIN_COMMENT)
+                
                 if main:
                     print(names[0].text+":")
                     print(main[0].text+"\n")
                 else:
-                    print(names[0].text+":")
-                    print("IMAGEN O GIF \n")
+                    if names != []:
+                        print(names[0].text+":")
+                        print("IMAGEN O GIF \n")
+                    else:
+                        break;
                     
                 names.pop(0)
                 
@@ -306,10 +310,19 @@ class Facebook_Scraper_POST:
                         names.pop(0)
                 else:
                     answers = comment.find_elements_by_xpath(SEC_COMMENT_GIF)
-                    for answer in answers:
-                        print("\t\t"+names[0].text+":")
-                        print("\t\t"+answer.text+"\n")
-                        names.pop(0)
+                    if answers:
+                        for answer in answers:
+                            print("\t\t"+names[0].text+":")
+                            print("\t\t"+answer.text+"\n")
+                            names.pop(0)
+                    else:
+                        answers = comment.find_elements_by_xpath(TRADUCT_COMMENT)
+                        for answer in answers:
+                            print("\t\t"+names[0].text+":")
+                            print("\t\t"+answer.text+"\n")
+                            names.pop(0)
+                    
+                            
 
     #Da click a todos los comentarios secundarios
     def see_comments_secondary(self,class_name):

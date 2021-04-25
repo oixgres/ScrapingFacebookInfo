@@ -22,7 +22,7 @@ if __name__ == "__main__":
     #PATH ="C:/Users/fhaos/Documents/FCQI/8mo/ayundantia/chromedriver.exe"
     PATH = "chromedriver.exe"
     h = Facebook_Scraper_POST(PATH)
-    h.loginSession(URL=URL_LOGIN,user=user[0],password=password[0])
+    h.loginSession(URL=URL_LOGIN,user=user[2],password=password[2])
     #h.test_comment_POST(URL='https://m.facebook.com/groups/413938496303058/permalink/469954730701434/')
     h.getComments(url='https://m.facebook.com/story.php?story_fbid=2768196876764948&id=1629107234007257&anchor_composer=false')
     

@@ -51,6 +51,7 @@ COMMENT_BOX = "//div[@class='_333v _45kb']/div"
 MAIN_COMMENT = ".//div[2]/div[1]/div/div[2]"
 SEC_COMMENT = ".//div[3]/div[1]/div/div[2]/div[1]/div/div[2]"
 SEC_COMMENT_GIF = ".//div[3]/div[1]/div/div[2]/div[1]/div[2]"
+TRADUCT_COMMENT = ".//div[2]/div[4]/div[1]/div/div[2]/div[1]/div[1]/div[2]"
 NAMES_COMMENT = "//div[@class='_2b06']/div[@class='_2b05']/a"
 
 
