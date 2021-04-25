@@ -17,8 +17,8 @@ class Facebook_Scraper_POST:
         self.driver.get(URL)
 
 
-    
-    def loginSession(self,URL,user ,password):  
+
+    def loginSession(self,URL,user ,password):
         self.driver.get(URL)                                                        # acceder page-login
         self.driver.find_element_by_id(LOGIN_EMAIL_ID).send_keys(user)             # introduce usuario
         self.driver.find_element_by_name(PASSWORD_NAME).send_keys(password)                # introduce password
@@ -38,17 +38,17 @@ class Facebook_Scraper_POST:
         index=0
         self.driver.get(URL)                                                 # acceder la pagina del grupo
         self.scroll_max()                                                    # mostrar todas las publicaciones
-        
+
         links = self.driver.find_elements_by_xpath(ARTICLE_LINK_XPATH)    # Encontrar todos elementos article(enlace de la publicacion)
-       
-        if number_POST>len(links):   
+
+        if number_POST>len(links):
             number_POST=len(links)                                      # Obtener los post basando en el number_POST
         for link in range(number_POST):
             js_script="return document.getElementsByTagName('article')["+str(index)+"].dataset.store"
             #POST_URL.append(str(links[link].get_attribute('href').split('?')[0]))
-            
-            
-            
+
+
+
             data_post = self.driver.execute_script(js_script)
             POST_ID.append(re.findall(r"top_level_post_id.(.+?):",str(data_post))[0])
             POST_URL.append(URL_POST_LINK+str(POST_ID[index]))
@@ -63,15 +63,15 @@ class Facebook_Scraper_POST:
                 POSTER_TEXT.append(poster_text.text)
             except NoSuchElementException:
                 POSTER_TEXT.append("No hay texto")
-                
+
             try:
                 poster_name=self.driver.find_element_by_xpath(POSTER_NAME_XPATH)
                 POSTER_NAME.append(poster_name.text)
             except NoSuchElementException:
                 print("ERROR")
-            
+
             time.sleep(1)
-            
+
         data=[]
         for index in range(len(POST_URL)):
             element={}
@@ -80,13 +80,13 @@ class Facebook_Scraper_POST:
             element["post_id"]=POST_ID[index]
             element["post_text"]=POSTER_TEXT[index]
             data.append(element)
-                  
+
         return data
-                
+
     def generateJson (self,file):
         file = open(file,'w+',encoding="utf-8")
         data=[]
-        
+
 
         for index in range(len(POST_URL)):
             element={}
@@ -95,10 +95,10 @@ class Facebook_Scraper_POST:
             element["post_id"]=POST_ID[index]
             element["post_text"]=POSTER_TEXT[index]
             data.append(element)
-                  
+
         json.dump(data,file,indent=4, ensure_ascii=False)
         file.close()
-        
+
     #https://m.facebook.com/ufi/group/seenby/profile/browser/?id=433655667664674
     #Obtener usuarios que visitaron el post
 
@@ -109,19 +109,19 @@ class Facebook_Scraper_POST:
     def test_User_names(self,POST_ID,URL_type,type_names):
         url=URL_type+str(POST_ID)
         self.driver.get(url)
-        
+
         t=True
-        
+
         while t:
             try:
                 self.driver.find_element_by_xpath(BOTTOM_SEE_MORE_XPATH).click()   # clic al elemento ver mas
                 time.sleep(2)
-            except NoSuchElementException:  
+            except NoSuchElementException:
                 t=False
                 pass
         list_name = self.driver.find_elements_by_xpath(LIST_NAME_XPATH)
         visited_names=[]
-        json_data={} 
+        json_data={}
         json_data["link_id"]=POST_ID
         index = 1
         for name in list_name:
@@ -135,25 +135,25 @@ class Facebook_Scraper_POST:
         json_data["number"]=len(visited_names)
         json_data[type_names]=visited_names
         return json_data
-    
+
     def get_reactions(self, POST_ID, URL_type):
         url = URL_type+str(POST_ID)
         self.driver.get(url)
-        
+
         result = []
-         
+
         #Creamos una copia por que los cortaremos y no queremos perder los datos
         allReactionsIDArray = ALL_REACTIONS_ID.copy()
         allReactionsXPathArray = ALL_REACTIONS_XPATH.copy()
         allReactionsNameArray = ALL_REACTIONS_NAME.copy()
-        
-        
+
+
         #Damos click de reaccion en reaccion
         for button in self.driver.find_elements_by_xpath(REACTION_BUTTON_XPATH):
             button.click()
-            time.sleep(1)  
+            time.sleep(1)
             index = 0
-            
+
             #Identificamos cual reaccion es a la que le dimos click
             for path in allReactionsXPathArray:
                 #Verificamos que exista la reaccion
@@ -163,25 +163,25 @@ class Facebook_Scraper_POST:
                         reaction_names = []
                         reaction_names.append(allReactionsNameArray[index])
                         list_name = self.driver.find_elements_by_xpath(allReactionsXPathArray[index])
-                        
+
                         #Transformamos los nombres de quienes reaccionaron a texto
                         for name in list_name:
                             if len(name.text) > 0:
                                 reaction_names.append(name.text)
-                                
+
                         result.append(reaction_names)
-                            
+
                         #Quitamos lo ya encontrado para no repetir busquedas
                         allReactionsXPathArray.pop(index)
                         allReactionsNameArray.pop(index)
                         allReactionsIDArray.pop(index)
-                        
+
                         break;
                 index+=1
         print(result)
-        
-                
-        
+
+
+
     def scroll_max(self):
         t = True
         while t:
@@ -201,7 +201,7 @@ class Facebook_Scraper_POST:
         self.driver.get(url)
         self.scroll_to_max_height_comment()
         self.see_comments_secondary(SEE_COMMENTS_SECONDARY_CLASS_NAME)
-        boxs = self.driver.find_elements_by_xpath("//div[@class='_2b04']") 
+        boxs = self.driver.find_elements_by_xpath("//div[@class='_2b04']")
         json_post_comments={}
         comments =[]
         num_comment = 0
@@ -247,7 +247,7 @@ class Facebook_Scraper_POST:
                 print(str(first_comment.get_attribute('data-commentid')))
 
                 try:
-                    comment_boxs=full_comments_box.find_elements_by_css_selector('div._2a_m > div._2b1k > div._2a_i') 
+                    comment_boxs=full_comments_box.find_elements_by_css_selector('div._2a_m > div._2b1k > div._2a_i')
                     print("contiene:"+str(len(comment_boxs)))
                     for box in comment_boxs:
                         answer_box = box.find_element_by_css_selector('div._2b04 > div._14v5 > div._2b06 ')
@@ -275,55 +275,72 @@ class Facebook_Scraper_POST:
         # #   print("to:"+str(first_etiqueta.text))
         #     print("comment:"+str(first_comment.text))
         #     print(str(first_comment.get_attribute('data-commentid')))
-    
+
     def getComments(self, url):
         self.driver.get(url)
         self.see_comments_secondary(SEE_COMMENTS_SECONDARY_CLASS_NAME)
-        
+
         #Caja de comentarios
         box = self.driver.find_elements_by_xpath(COMMENT_BOX)
         names = self.driver.find_elements_by_xpath(NAMES_COMMENT)
-        
+
         if box:
             for comment in box:
                 #Comentarios principales
                 main = comment.find_elements_by_xpath(MAIN_COMMENT)
-                
+
                 if main:
                     print(names[0].text+":")
-                    print(main[0].text+"\n")
+                    to=self.getToName(main[0])
+                    print(main[0].text[len(to)+1:])
+                    print("To:"+to+'\n')
+
                 else:
                     if names != []:
                         print(names[0].text+":")
-                        print("IMAGEN O GIF \n")
+                        print("IMAGEN O GIF ")
                     else:
                         break;
-                    
+
                 names.pop(0)
-                
+
                 #Respuestas
                 answers = comment.find_elements_by_xpath(SEC_COMMENT)
                 if answers:
                     for answer in answers:
+
                         print("\t\t"+names[0].text+":")
-                        print("\t\t"+answer.text+"\n")
+                        to=self.getToName(answer)
+                        print("\t\t"+answer.text[len(to)+1:]+"")
+                        print("\t\tTo:"+to+'\n')
                         names.pop(0)
                 else:
                     answers = comment.find_elements_by_xpath(SEC_COMMENT_GIF)
                     if answers:
                         for answer in answers:
                             print("\t\t"+names[0].text+":")
+                            to=self.getToName(answer)
                             print("\t\t"+answer.text+"\n")
+                            print("\t\tTo:"+to+'\n')
                             names.pop(0)
                     else:
                         answers = comment.find_elements_by_xpath(TRADUCT_COMMENT)
                         for answer in answers:
                             print("\t\t"+names[0].text+":")
+                            to=self.getToName(answer)
                             print("\t\t"+answer.text+"\n")
+                            print("\t\tTo:"+to+'\n')
                             names.pop(0)
-                    
-                            
 
+
+
+    def getToName(self,webElement):
+        name='None'
+        try :
+            name=webElement.find_element_by_css_selector('a').text
+        except  NoSuchElementException:
+            pass
+        return name
     #Da click a todos los comentarios secundarios
     def see_comments_secondary(self,class_name):
         for bton in self.driver.find_elements_by_class_name(class_name):
@@ -337,7 +354,7 @@ class Facebook_Scraper_POST:
                 try:
                     web_element.find_element_by_xpath('//a[@class="async_elem"]').click()   # clic al elemento ver mas
                     time.sleep(1)
-                except NoSuchElementException:  
+                except NoSuchElementException:
                     t=False
                     pass
 
@@ -348,11 +365,6 @@ class Facebook_Scraper_POST:
             try:
                 self.driver.find_element_by_xpath('//div[@class="async_elem"]').click()   # clic al elemento ver mas
                 time.sleep(2)
-            except NoSuchElementException:  
+            except NoSuchElementException:
                 t=False
                 pass
-        
-
-
-
-    
