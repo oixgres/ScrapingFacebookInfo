@@ -8,3 +8,4 @@ URL_VISITED ="https://m.facebook.com/ufi/group/seenby/profile/browser/?id="
 URL_LIKED = "https://m.facebook.com/ufi/reaction/profile/browser/?ft_ent_identifier="
 URL_SHARED = "https://m.facebook.com/browse/shares?id="
 URL_POST_LINK = "https://m.facebook.com/groups/413938496303058/permalink/"
+

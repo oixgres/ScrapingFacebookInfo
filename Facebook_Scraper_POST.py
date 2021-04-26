@@ -45,9 +45,6 @@ class Facebook_Scraper_POST:
             number_POST=len(links)                                      # Obtener los post basando en el number_POST
         for link in range(number_POST):
             js_script="return document.getElementsByTagName('article')["+str(index)+"].dataset.store"
-            #POST_URL.append(str(links[link].get_attribute('href').split('?')[0]))
-
-
 
             data_post = self.driver.execute_script(js_script)
             POST_ID.append(re.findall(r"top_level_post_id.(.+?):",str(data_post))[0])
@@ -63,7 +60,6 @@ class Facebook_Scraper_POST:
                 POSTER_TEXT.append(poster_text.text)
             except NoSuchElementException:
                 POSTER_TEXT.append("No hay texto")
-
             try:
                 poster_name=self.driver.find_element_by_xpath(POSTER_NAME_XPATH)
                 POSTER_NAME.append(poster_name.text)
@@ -83,21 +79,6 @@ class Facebook_Scraper_POST:
 
         return data
 
-    def generateJson (self,file):
-        file = open(file,'w+',encoding="utf-8")
-        data=[]
-
-
-        for index in range(len(POST_URL)):
-            element={}
-            element["link"]=POST_URL[index]
-            element["poster_name"]=POSTER_NAME[index]
-            element["post_id"]=POST_ID[index]
-            element["post_text"]=POSTER_TEXT[index]
-            data.append(element)
-
-        json.dump(data,file,indent=4, ensure_ascii=False)
-        file.close()
 
     #https://m.facebook.com/ufi/group/seenby/profile/browser/?id=433655667664674
     #Obtener usuarios que visitaron el post
@@ -156,29 +137,35 @@ class Facebook_Scraper_POST:
 
             #Identificamos cual reaccion es a la que le dimos click
             for path in allReactionsXPathArray:
+                username=[]
+                data={}
                 #Verificamos que exista la reaccion
                 if self.driver.find_elements_by_id(allReactionsIDArray[index]):
                     #Verificamos que este desplegada la info de la reaccion
                     if self.driver.find_elements_by_xpath(allReactionsXPathArray[index]):
                         reaction_names = []
                         reaction_names.append(allReactionsNameArray[index])
+                        data['reaction']=allReactionsNameArray[index]
                         list_name = self.driver.find_elements_by_xpath(allReactionsXPathArray[index])
 
                         #Transformamos los nombres de quienes reaccionaron a texto
                         for name in list_name:
                             if len(name.text) > 0:
                                 reaction_names.append(name.text)
-
-                        result.append(reaction_names)
+                                username.append(name.text)
+                        #result.append(reaction_names)
 
                         #Quitamos lo ya encontrado para no repetir busquedas
                         allReactionsXPathArray.pop(index)
                         allReactionsNameArray.pop(index)
                         allReactionsIDArray.pop(index)
-
+                        
+                        data['name']=username
+                        result.append(data)
                         break;
+
                 index+=1
-        print(result)
+        return result
 
 
 
@@ -224,46 +211,7 @@ class Facebook_Scraper_POST:
         json_post_comments['comments']=comments
         return json_post_comments
 
-    def test_comment_secondary(self,url):
-        errors ={}
-        self.driver.get(url)
-        self.see_comments_secondary(SEE_COMMENTS_SECONDARY_CLASS_NAME)
-        full_comments_boxs=self.driver.find_elements_by_css_selector('div._2a_i._2a_l> div._2b04 ')
-        print(len(full_comments_boxs))
-        full_comments_box=self.driver.find_elements_by_css_selector('div._2a_i > div._2b04  ' )
-        print(len(full_comments_box))
 
-        full_comments_boxs=self.driver.find_elements_by_css_selector('div._2a_i._2a_l> div._2b04')       # obtener la caja de comentarios
-        print("cantidad de comentarios multinivel:"+str(len(full_comments_boxs)))
-        for full_comments_box in full_comments_boxs:
-            try:
-                first_commenter= full_comments_box.find_element_by_css_selector(' div._2b06 >div')                                    # obtener la primera informacion de primer comentarios
-                first_comment=full_comments_box.find_element_by_css_selector('div._2b06 >div:nth-child(2)')
-                first_etiqueta=full_comments_box.find_element_by_css_selector('div._2b06 >div:nth-child(2)>a')
-                print('--------comentario primario--------')
-                print("name:"+str(first_commenter.text))
-             #   print("to:"+str(first_etiqueta.text))
-                print("comment:"+str(first_comment.text))
-                print(str(first_comment.get_attribute('data-commentid')))
-
-                try:
-                    comment_boxs=full_comments_box.find_elements_by_css_selector('div._2a_m > div._2b1k > div._2a_i')
-                    print("contiene:"+str(len(comment_boxs)))
-                    for box in comment_boxs:
-                        answer_box = box.find_element_by_css_selector('div._2b04 > div._14v5 > div._2b06 ')
-                        answer_username=answer_box.find_element_by_css_selector('div._2b05')
-                        comment = answer_box.find_element_by_css_selector('div:nth-child(2)')
-                        to = answer_box.find_element_by_css_selector('div:nth-child(2) > a')
-                        print('--------comentario secundario-------')
-                        print('name:'+str(answer_username.text))
-                        print('comment:'+str(comment.text[len(to.text)+1:]))
-                        print('to:'+str(to.text))
-                        print('---------------------------')
-                except NoSuchElementException:
-                    print("no hay comentarios secundarios")
-                    pass
-            except NoSuchElementException:
-                print(errors)
 
         # full_comments_boxs=self.driver.find_elements_by_css_selector('div._2a_i> div._2b04')
         # for full_comments_box in full_comments_boxs:
@@ -283,24 +231,37 @@ class Facebook_Scraper_POST:
         #Caja de comentarios
         box = self.driver.find_elements_by_xpath(COMMENT_BOX)
         names = self.driver.find_elements_by_xpath(NAMES_COMMENT)
-
+        result =[]
+        
         if box:
             for comment in box:
                 #Comentarios principales
                 main = comment.find_elements_by_xpath(MAIN_COMMENT)
+                comments={}
+                primaryComment={}
+                secondaryComments=[]
                 
                 if names == []:
                     break; 
 
                 if main:
+                    
                     print(names[0].text+":")
                     to=self.getToName(main[0])
-                    print(main[0].text[len(to)+1:])
+                    if to : positionName=len(to)+1
+                    else : positionName=0
+                    print(main[0].text[positionName:])
                     print("To:"+to+'\n')
 
+                    primaryComment['name']=names[0].text
+                    primaryComment['content']=main[0].text[positionName:]
+                    primaryComment['to']=to
                 else:
                     print(names[0].text+":")
                     print("IMAGEN O GIF ")
+                    primaryComment['name']=names[0].text
+                    primaryComment['content']="IMAGEN O GIF "
+                    primaryComment['to']="None"
 
                 names.pop(0)
 
@@ -308,33 +269,62 @@ class Facebook_Scraper_POST:
                 answers = comment.find_elements_by_xpath(SEC_COMMENT)
                 if answers:
                     for answer in answers:
+                        secondaryComment={}
                         print("\t\t"+names[0].text+":")
                         to=self.getToName(answer)
-                        print("\t\t"+answer.text[len(to)+1:]+"")
+                        if to : positionName=len(to)+1
+                        else : positionName=0
+                        print("\t\t"+answer.text[positionName:]+"")
                         print("\t\tTo:"+to+'\n')
+                        secondaryComment['name']=names[0].text
+                        secondaryComment['content']=answer.text[positionName:]
+                        secondaryComment['to']=to
+                        secondaryComments.append(secondaryComment)
                         names.pop(0)
                 else:
                     answers = comment.find_elements_by_xpath(SEC_COMMENT_GIF)
                     if answers:
                         for answer in answers:
+                            secondaryComment={}
                             print("\t\t"+names[0].text+":")
                             to=self.getToName(answer)
-                            print("\t\t"+answer.text+"\n")
+                            if to : positionName=len(to)+1
+                            else : positionName=0
+                            print("\t\t"+answer.text[positionName:]+"")
                             print("\t\tTo:"+to+'\n')
+                            secondaryComment['name']=names[0].text
+                            secondaryComment['content']=answer.text[positionName:]
+                            secondaryComment['to']=to
+                            secondaryComments.append(secondaryComment)
                             names.pop(0)
                     else:
                         answers = comment.find_elements_by_xpath(TRADUCT_COMMENT)
                         for answer in answers:
+                            secondaryComment={}
                             print("\t\t"+names[0].text+":")
                             to=self.getToName(answer)
                             print("\t\t"+answer.text+"\n")
                             print("\t\tTo:"+to+'\n')
+                            if to : positionName=len(to)+1
+                            else : positionName=0
+                            print("\t\t"+answer.text[positionName:]+"")
+                            print("\t\tTo:"+to+'\n')
+                            secondaryComment['name']=names[0].text
+                            secondaryComment['content']=answer.text[positionName:]
+                            secondaryComment['to']=to
+                            secondaryComments.append(secondaryComment)
                             names.pop(0)
+                comments['primaryComment']=primaryComment
+                comments['secondaryComment']=secondaryComments
+                result.append(comments)
+
+        return result
+                    
 
 
 
     def getToName(self,webElement):
-        name='None'
+        name=''
         try :
             name=webElement.find_element_by_css_selector('a').text
         except  NoSuchElementException:

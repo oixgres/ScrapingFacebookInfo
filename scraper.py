@@ -5,17 +5,7 @@ import time
 import json
 import re
 from Facebook_Scraper_POST import Facebook_Scraper_POST
-
-def writeJson(data,file):
-    file = open(file,'w+',encoding="utf-8")
-    json.dump(data,file,indent=4, ensure_ascii=False)
-    file.close()
-
-def readJson(file):
-    with open('post.json',encoding='utf-8') as f:
-        data_json = json.loads(f.read())
-    return data_json
-
+from managerFile import readJson,writeJson
 
 if __name__ == "__main__":
     
@@ -24,8 +14,13 @@ if __name__ == "__main__":
     h = Facebook_Scraper_POST(PATH)
     h.loginSession(URL=URL_LOGIN,user=user[2],password=password[2])
     #h.test_comment_POST(URL='https://m.facebook.com/groups/413938496303058/permalink/469954730701434/')
-    h.getComments(url='https://m.facebook.com/story.php?story_fbid=2768196876764948&id=1629107234007257&anchor_composer=false')
-    
+    # dataComment=h.getComments(url='https://m.facebook.com/story.php?story_fbid=2768196876764948&id=1629107234007257&anchor_composer=false')
+    # writeJson(dataComment,'comment.json')
+
+    data=h.get_reactions(POST_ID=2789506314634004,URL_type= "https://m.facebook.com/ufi/reaction/profile/browser/?ft_ent_identifier=")
+    writeJson(data,'reactions.json')
+
+    # datat=readJson('comment.json')
     #obtener el contenido de los post 
     #json_post=h.collectionPOST(URL_GROUP,10)
     #writeJson(json_post,'post.json')
