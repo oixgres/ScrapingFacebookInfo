@@ -6,19 +6,51 @@ import json
 import re
 from Facebook_Scraper_POST import Facebook_Scraper_POST
 from managerFile import readJson,writeJson
+import csv
 
 if __name__ == "__main__":
     
-    #PATH ="C:/Users/fhaos/Documents/FCQI/8mo/ayundantia/chromedriver.exe"
+    #Conexion
+    
     PATH = "chromedriver.exe"
     h = Facebook_Scraper_POST(PATH)
     h.loginSession(URL=URL_LOGIN,user=user[2],password=password[2])
+    
+    data=h.collectionPOST(URL_GROUP,3)
+    
+    
+    
+    
+    with open('post.csv', 'w', newline='') as f:
+        writer = csv.writer(f, delimiter=',', quoting=csv.QUOTE_NONE, escapechar=";")
+        
+        for index in range(len(data)):
+            writer.writerow(data[index])
+    
+    #Obtener enlaces de los posts
+    #json_post=h.collectionPOST(URL_GROUP,20)
+    #writeJson(json_post,'post.json')
+    
+    
+    '''
+    json_post=readJson('post.json')
+    
+    dataComment=h.getComments(json_post[12]['link'])
+    writeJson(dataComment,'comment.json')
+    
+    reactions = h.get_reactions(json_post[9]['post_id'], URL_LIKED)
+    writeJson(reactions,'reactions.json')
+    '''
+    
+    
+    #PATH ="C:/Users/fhaos/Documents/FCQI/8mo/ayundantia/chromedriver.exe"
+    
     #h.test_comment_POST(URL='https://m.facebook.com/groups/413938496303058/permalink/469954730701434/')
     # dataComment=h.getComments(url='https://m.facebook.com/story.php?story_fbid=2768196876764948&id=1629107234007257&anchor_composer=false')
     # writeJson(dataComment,'comment.json')
 
-    data=h.get_reactions(POST_ID=2789506314634004,URL_type= "https://m.facebook.com/ufi/reaction/profile/browser/?ft_ent_identifier=")
-    writeJson(data,'reactions.json')
+    #data=h.get_reactions(POST_ID=2789506314634004,URL_type= "https://m.facebook.com/ufi/reaction/profile/browser/?ft_ent_identifier=")
+    #writeJson(data,'reactions.json')
 
     # datat=readJson('comment.json')
     #obtener el contenido de los post 

@@ -68,6 +68,7 @@ class Facebook_Scraper_POST:
 
             time.sleep(1)
 
+        '''
         data=[]
         for index in range(len(POST_URL)):
             element={}
@@ -76,7 +77,20 @@ class Facebook_Scraper_POST:
             element["post_id"]=POST_ID[index]
             element["post_text"]=POSTER_TEXT[index]
             data.append(element)
-
+        '''
+        
+        
+        data=[]
+        for index in range(len(POST_URL)):
+            POSTER_TEXT[index] = POSTER_TEXT[index].replace('', "").replace(",", "")
+            
+            
+            element=[]
+            element.append(POST_ID[index])
+            element.append(POSTER_NAME[index])
+            element.append(POSTER_TEXT[index])
+            element.append(POST_URL[index])
+            data.append(element)
         return data
 
 

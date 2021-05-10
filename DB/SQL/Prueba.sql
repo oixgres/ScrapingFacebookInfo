@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS POST;
+
+CREATE  TABLE IF NOT EXISTS POST(
+    post_id VARCHAR(45) NOT NULL,
+    poster_name VARCHAR(45) NOT NULL,
+    post_text VARCHAR(500) NOT NULL,
+    link VARCHAR(500) NOT NULL,
+    PRIMARY KEY(post_id)
+)
