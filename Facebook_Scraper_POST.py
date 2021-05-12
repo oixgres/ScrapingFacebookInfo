@@ -67,7 +67,7 @@ class Facebook_Scraper_POST:
                 print("ERROR")
 
             time.sleep(1)
-
+            
         data=[]
         for index in range(len(POST_URL)):
             element={}
@@ -75,10 +75,7 @@ class Facebook_Scraper_POST:
             element["poster_name"]=POSTER_NAME[index]
             element["post_id"]=POST_ID[index]
             element["post_text"]=POSTER_TEXT[index]
-            data.append(element)
-
-
-        
+            data.append(element)        
         
         # data=[]
         # for index in range(len(POST_URL)):

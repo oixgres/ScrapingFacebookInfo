@@ -6,49 +6,61 @@ import json
 import re
 from Facebook_Scraper_POST import Facebook_Scraper_POST
 from managerFile import readJson,writeJson
+import csv
+import pymysql
 
 if __name__ == "__main__":
     
-<<<<<<< Updated upstream
-    #PATH ="C:/Users/fhaos/Documents/FCQI/8mo/ayundantia/chromedriver.exe"
-=======
     PATH = "chromedriver.exe"
     h = Facebook_Scraper_POST(PATH)
     h.loginSession(URL=URL_LOGIN,user=user[0],password=password[0])
+    data=h.collectionPOST(URL_GROUP,3)
     
-    #data=h.collectionPOST(URL_GROUP,3)
-    # data=readJson("post.json")
-    # print(data[0]['link'])
     #Conexion SQL
     connection = pymysql.connect(host = "174.136.52.201", user="conisoft_fb", password = "Fengoigres1094346", database = "conisoft_facebook_scraper")
     cursor = connection.cursor()
+    
+    #data=readJson("comment.json")
+    #print(data[0])
+    #query = "INSERT INTO Comentarios(idComentarios, post_id, persona, texto) VALUES(%s, %s, %s, %s);"
+    #cursor.execute(query, (data[0]['primaryComment']['idComment'],510769113286662,data[0]['primaryComment']['name'],data[0]['primaryComment']['content']));
 
+    #Creamos CSV
+    with open('post.csv', 'w', newline='') as f:
+        writer = csv.writer(f, delimiter=',', quoting=csv.QUOTE_NONE, escapechar=";")
         
-    # for index in range(len(data)):
-    #     query = "INSERT INTO POST(post_id, poster_name, post_text, link) VALUES(%s, %s, %s, %s);"
-    #     cursor.execute(query, (data[index]['post_id'],data[index]['poster_name'],data[index]['post_text'],data[index]['link']));
-    
-    data=readJson("comment.json")
-    print(data[0])
-    query = "INSERT INTO Comentarios(idComentarios, post_id, persona, texto) VALUES(%s, %s, %s, %s);"
-    cursor.execute(query, (data[0]['primaryComment']['idComment'],510769113286662,data[0]['primaryComment']['name'],data[0]['primaryComment']['content']));
-    
+        for index in range(len(data)):
+            writer.writerow(data[index])
+            print(data[index][2])
+            query = "INSERT INTO POST(post_id, poster_name, post_text, link) VALUES(%s, %s, %s, %s);"
+            cursor.execute(query, data[index]);
     
     connection.close()
 
-      
+    #Obtener enlaces de los posts
+    #json_post=h.collectionPOST(URL_GROUP,20)
+    #writeJson(json_post,'post.json')
+    
     
     '''
->>>>>>> Stashed changes
-    PATH = "chromedriver.exe"
-    h = Facebook_Scraper_POST(PATH)
-    h.loginSession(URL=URL_LOGIN,user=user[2],password=password[2])
+    json_post=readJson('post.json')
+    
+    dataComment=h.getComments(json_post[12]['link'])
+    writeJson(dataComment,'comment.json')
+    
+    reactions = h.get_reactions(json_post[9]['post_id'], URL_LIKED)
+    writeJson(reactions,'reactions.json')
+    '''
+    
+    
+    #PATH ="C:/Users/fhaos/Documents/FCQI/8mo/ayundantia/chromedriver.exe"
+    
     #h.test_comment_POST(URL='https://m.facebook.com/groups/413938496303058/permalink/469954730701434/')
     # dataComment=h.getComments(url='https://m.facebook.com/story.php?story_fbid=2768196876764948&id=1629107234007257&anchor_composer=false')
     # writeJson(dataComment,'comment.json')
 
-    data=h.get_reactions(POST_ID=2789506314634004,URL_type= "https://m.facebook.com/ufi/reaction/profile/browser/?ft_ent_identifier=")
-    writeJson(data,'reactions.json')
+    #data=h.get_reactions(POST_ID=2789506314634004,URL_type= "https://m.facebook.com/ufi/reaction/profile/browser/?ft_ent_identifier=")
+    #writeJson(data,'reactions.json')
 
     # datat=readJson('comment.json')
     #obtener el contenido de los post 
