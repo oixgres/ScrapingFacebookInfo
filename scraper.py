@@ -9,7 +9,37 @@ from managerFile import readJson,writeJson
 
 if __name__ == "__main__":
     
+<<<<<<< Updated upstream
     #PATH ="C:/Users/fhaos/Documents/FCQI/8mo/ayundantia/chromedriver.exe"
+=======
+    PATH = "chromedriver.exe"
+    h = Facebook_Scraper_POST(PATH)
+    h.loginSession(URL=URL_LOGIN,user=user[0],password=password[0])
+    
+    #data=h.collectionPOST(URL_GROUP,3)
+    # data=readJson("post.json")
+    # print(data[0]['link'])
+    #Conexion SQL
+    connection = pymysql.connect(host = "174.136.52.201", user="conisoft_fb", password = "Fengoigres1094346", database = "conisoft_facebook_scraper")
+    cursor = connection.cursor()
+
+        
+    # for index in range(len(data)):
+    #     query = "INSERT INTO POST(post_id, poster_name, post_text, link) VALUES(%s, %s, %s, %s);"
+    #     cursor.execute(query, (data[index]['post_id'],data[index]['poster_name'],data[index]['post_text'],data[index]['link']));
+    
+    data=readJson("comment.json")
+    print(data[0])
+    query = "INSERT INTO Comentarios(idComentarios, post_id, persona, texto) VALUES(%s, %s, %s, %s);"
+    cursor.execute(query, (data[0]['primaryComment']['idComment'],510769113286662,data[0]['primaryComment']['name'],data[0]['primaryComment']['content']));
+    
+    
+    connection.close()
+
+      
+    
+    '''
+>>>>>>> Stashed changes
     PATH = "chromedriver.exe"
     h = Facebook_Scraper_POST(PATH)
     h.loginSession(URL=URL_LOGIN,user=user[2],password=password[2])

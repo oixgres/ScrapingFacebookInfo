@@ -68,6 +68,10 @@ class Facebook_Scraper_POST:
 
             time.sleep(1)
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
         data=[]
         for index in range(len(POST_URL)):
             element={}
@@ -77,6 +81,22 @@ class Facebook_Scraper_POST:
             element["post_text"]=POSTER_TEXT[index]
             data.append(element)
 
+<<<<<<< Updated upstream
+=======
+        
+        
+        # data=[]
+        # for index in range(len(POST_URL)):
+        #     POSTER_TEXT[index] = POSTER_TEXT[index].replace('', "").replace(",", "")
+            
+            
+        #     element=[]
+        #     element.append(POST_ID[index])
+        #     element.append(POSTER_NAME[index])
+        #     element.append(POSTER_TEXT[index])
+        #     element.append(POST_URL[index])
+        #     data.append(element)
+>>>>>>> Stashed changes
         return data
 
 
@@ -224,8 +244,8 @@ class Facebook_Scraper_POST:
         #     print("comment:"+str(first_comment.text))
         #     print(str(first_comment.get_attribute('data-commentid')))
 
-    def getComments(self, url):
-        self.driver.get(url)
+    def getComments(self, url,postId):
+        self.driver.get(url+str(postId))
         self.see_comments_secondary(SEE_COMMENTS_SECONDARY_CLASS_NAME)
 
         #Caja de comentarios
@@ -254,6 +274,7 @@ class Facebook_Scraper_POST:
                     print("To:"+to+'\n')
                     idComment=self.getIdComment(main[0])
                     #print("Id de comentarios:"+idComment)
+                    primaryComment['postId']=postId
                     primaryComment['idComment']=idComment
                     primaryComment['name']=names[0].text
                     primaryComment['content']=main[0].text[positionName:]
@@ -280,6 +301,7 @@ class Facebook_Scraper_POST:
                         print("\t\t"+answer.text[positionName:]+"")
                         print("\t\tTo:"+to+'\n')
                         secondaryIdComment=self.getIdComment(answer)
+                        secondaryComment['postId']=postId
                         secondaryComment['IdComment']=secondaryIdComment
                         secondaryComment['name']=names[0].text
                         secondaryComment['content']=answer.text[positionName:]
@@ -299,6 +321,7 @@ class Facebook_Scraper_POST:
                             print("\t\t"+answer.text[positionName:]+"")
                             print("\t\tTo:"+to+'\n')
                             secondaryIdComment=self.getIdComment(answer)
+                            secondaryComment['postId']=postId
                             secondaryComment['IdComment']=secondaryIdComment
                             secondaryComment['name']=names[0].text
                             secondaryComment['content']=answer.text[positionName:]
@@ -319,6 +342,7 @@ class Facebook_Scraper_POST:
                             print("\t\t"+answer.text[positionName:]+"")
                             print("\t\tTo:"+to+'\n')
                             secondaryIdComment=self.getIdComment(answer)
+                            secondaryComment['postId']=postId
                             secondaryComment['IdComment']=secondaryIdComment
                             secondaryComment['name']=names[0].text
                             secondaryComment['content']=answer.text[positionName:]
