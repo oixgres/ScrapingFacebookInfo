@@ -14,13 +14,17 @@ if __name__ == "__main__":
     PATH = "chromedriver.exe"
     h = Facebook_Scraper_POST(PATH)
     h.loginSession(URL=URL_LOGIN,user=user[0],password=password[0])
-    
     data=h.collectionPOST(URL_GROUP,3)
     
     #Conexion SQL
     connection = pymysql.connect(host = "174.136.52.201", user="conisoft_fb", password = "Fengoigres1094346", database = "conisoft_facebook_scraper")
     cursor = connection.cursor()
     
+    #data=readJson("comment.json")
+    #print(data[0])
+    #query = "INSERT INTO Comentarios(idComentarios, post_id, persona, texto) VALUES(%s, %s, %s, %s);"
+    #cursor.execute(query, (data[0]['primaryComment']['idComment'],510769113286662,data[0]['primaryComment']['name'],data[0]['primaryComment']['content']));
+
     #Creamos CSV
     with open('post.csv', 'w', newline='') as f:
         writer = csv.writer(f, delimiter=',', quoting=csv.QUOTE_NONE, escapechar=";")
@@ -31,28 +35,8 @@ if __name__ == "__main__":
             query = "INSERT INTO POST(post_id, poster_name, post_text, link) VALUES(%s, %s, %s, %s);"
             cursor.execute(query, data[index]);
     
-    
     connection.close()
 
-      
-    
-    '''
-    PATH = "chromedriver.exe"
-    h = Facebook_Scraper_POST(PATH)
-    h.loginSession(URL=URL_LOGIN,user=user[2],password=password[2])
-    
-    data=h.collectionPOST(URL_GROUP,3)
-    
-    
-    
-    
-    with open('post.csv', 'w', newline='') as f:
-        writer = csv.writer(f, delimiter=',', quoting=csv.QUOTE_NONE, escapechar=";")
-        
-        for index in range(len(data)):
-            writer.writerow(data[index])
-    
-    '''
     #Obtener enlaces de los posts
     #json_post=h.collectionPOST(URL_GROUP,20)
     #writeJson(json_post,'post.json')

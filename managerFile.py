@@ -8,6 +8,6 @@ def writeJson(data,file):
     file.close()
 
 def readJson(file):
-    with open('post.json',encoding='utf-8') as f:
+    with open(file,encoding='utf-8') as f:
         data_json = json.loads(f.read())
     return data_json
