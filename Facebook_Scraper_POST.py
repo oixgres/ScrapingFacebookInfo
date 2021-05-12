@@ -68,10 +68,6 @@ class Facebook_Scraper_POST:
 
             time.sleep(1)
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
         data=[]
         for index in range(len(POST_URL)):
             element={}
@@ -81,8 +77,7 @@ class Facebook_Scraper_POST:
             element["post_text"]=POSTER_TEXT[index]
             data.append(element)
 
-<<<<<<< Updated upstream
-=======
+
         
         
         # data=[]
@@ -96,7 +91,7 @@ class Facebook_Scraper_POST:
         #     element.append(POSTER_TEXT[index])
         #     element.append(POST_URL[index])
         #     data.append(element)
->>>>>>> Stashed changes
+
         return data
 
 
