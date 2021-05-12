@@ -14,7 +14,7 @@ if __name__ == "__main__":
     PATH = "chromedriver.exe"
     h = Facebook_Scraper_POST(PATH)
     h.loginSession(URL=URL_LOGIN,user=user[0],password=password[0])
-    data=h.collectionPOST(URL_GROUP,3)
+    data=h.collectionPOST(URL_GROUP,10)
     
     #Conexion SQL
     connection = pymysql.connect(host = "174.136.52.201", user="conisoft_fb", password = "Fengoigres1094346", database = "conisoft_facebook_scraper")
@@ -26,14 +26,27 @@ if __name__ == "__main__":
     #cursor.execute(query, (data[0]['primaryComment']['idComment'],510769113286662,data[0]['primaryComment']['name'],data[0]['primaryComment']['content']));
 
     #Creamos CSV
-    with open('post.csv', 'w', newline='') as f:
-        writer = csv.writer(f, delimiter=',', quoting=csv.QUOTE_NONE, escapechar=";")
+    #with open('post.csv', 'w', newline='') as f:
+     #   writer = csv.writer(f, delimiter=',', quoting=csv.QUOTE_NONE, escapechar=";")
+    
+    #obtenemos los comentarios
+    #for index in range(len(data)):
+    #    dataComments = h.getComments(data[index][3])
+     
         
-        for index in range(len(data)):
-            writer.writerow(data[index])
-            print(data[index][2])
-            query = "INSERT INTO POST(post_id, poster_name, post_text, link) VALUES(%s, %s, %s, %s);"
-            cursor.execute(query, data[index]);
+    for index in range(len(data)):
+        #writer.writerow(data[index])
+        
+        #Se almacena el post
+        query = "INSERT INTO Post(idPost, URL, Persona, Texto) VALUES(%s, %s, %s, %s);"
+        cursor.execute(query, data[index]);
+        
+        #Se obtienen comentarios y almacenan  almacenan los comentarios
+        dataComments = h.getComments(data[index][1], data[index][0])
+        
+        for i in range(len(dataComments)):
+            query = "INSERT INTO Comentarios(idComentarios, post_idPost, Persona, Texto) VALUES(%s, %s, %s, %s);"
+            cursor.execute(query, (dataComments[i]['primaryComment']['idComment'], data[index][0], dataComments[i]['primaryComment']['name'], dataComments[i]['primaryComment']['content']))
     
     connection.close()
 

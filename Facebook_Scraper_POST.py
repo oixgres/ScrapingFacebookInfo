@@ -67,27 +67,29 @@ class Facebook_Scraper_POST:
                 print("ERROR")
 
             time.sleep(1)
-            
+                
+        '''
         data=[]
         for index in range(len(POST_URL)):
             element={}
-            element["link"]=POST_URL[index]
-            element["poster_name"]=POSTER_NAME[index]
             element["post_id"]=POST_ID[index]
+            element["poster_name"]=POSTER_NAME[index]
             element["post_text"]=POSTER_TEXT[index]
+            element["link"]=POST_URL[index]
             data.append(element)        
-        
-        # data=[]
-        # for index in range(len(POST_URL)):
-        #     POSTER_TEXT[index] = POSTER_TEXT[index].replace('', "").replace(",", "")
+        '''
+        data=[]
+        for index in range(len(POST_URL)):
+            POSTER_TEXT[index] = POSTER_TEXT[index].replace('', "").replace(",", "")
             
             
-        #     element=[]
-        #     element.append(POST_ID[index])
-        #     element.append(POSTER_NAME[index])
-        #     element.append(POSTER_TEXT[index])
-        #     element.append(POST_URL[index])
-        #     data.append(element)
+            element=[]
+            element.append(POST_ID[index])
+            element.append(POST_URL[index])
+            element.append(POSTER_NAME[index])
+            element.append(POSTER_TEXT[index])
+            
+            data.append(element)
 
         return data
 
@@ -236,8 +238,8 @@ class Facebook_Scraper_POST:
         #     print("comment:"+str(first_comment.text))
         #     print(str(first_comment.get_attribute('data-commentid')))
 
-    def getComments(self, url,postId):
-        self.driver.get(url+str(postId))
+    def getComments(self, url, postId):
+        self.driver.get(url)
         self.see_comments_secondary(SEE_COMMENTS_SECONDARY_CLASS_NAME)
 
         #Caja de comentarios
