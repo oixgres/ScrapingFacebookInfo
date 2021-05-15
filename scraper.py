@@ -10,15 +10,22 @@ import csv
 import pymysql
 
 if __name__ == "__main__":
-    
+    '''
     PATH = "chromedriver.exe"
     h = Facebook_Scraper_POST(PATH)
     h.loginSession(URL=URL_LOGIN,user=user[0],password=password[0])
     data=h.collectionPOST(URL_GROUP,10)
-    
+    '''
     #Conexion SQL
-    connection = pymysql.connect(host = "174.136.52.201", user="conisoft_fb", password = "Fengoigres1094346", database = "conisoft_facebook_scraper")
+    connection = pymysql.connect(host = "174.136.52.201",  user="conisoft_fb", password = "Fengoigres1094346", database = "conisoft_facebook_scraper")
     cursor = connection.cursor()
+    
+   # query = "GRANT ALL PRIVILEGES ON conisoft_facebook_scraper TO 'conisoft_fb'@'%' IDENTIFIED BY 'Fengoigres1094346';"
+    
+   # cursor.execute(query)
+    
+    connection.close()
+
     
     #data=readJson("comment.json")
     #print(data[0])
@@ -33,7 +40,7 @@ if __name__ == "__main__":
     #for index in range(len(data)):
     #    dataComments = h.getComments(data[index][3])
      
-        
+    '''   
     for index in range(len(data)):
         #writer.writerow(data[index])
         
@@ -47,9 +54,8 @@ if __name__ == "__main__":
         for i in range(len(dataComments)):
             query = "INSERT INTO Comentarios(idComentarios, post_idPost, Persona, Texto) VALUES(%s, %s, %s, %s);"
             cursor.execute(query, (dataComments[i]['primaryComment']['idComment'], data[index][0], dataComments[i]['primaryComment']['name'], dataComments[i]['primaryComment']['content']))
+    '''
     
-    connection.close()
-
     #Obtener enlaces de los posts
     #json_post=h.collectionPOST(URL_GROUP,20)
     #writeJson(json_post,'post.json')

@@ -5,7 +5,12 @@
 -- Scrapping Facebook Data Base
 -- Guerra Cervantes Sergio Enrique
 
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+GRANT ALL PRIVILEGES
+ON conisoft_facebook_scraper
+TO 'conisoft_fb'@'%'
+IDENTIFIED BY 'Fengoigres1094346';
+
+
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 
 
@@ -15,14 +20,14 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS Post ;
 
 CREATE TABLE IF NOT EXISTS Post (
-  idPost VARCHAR(100) NOT NULL,
+  idPost VARCHAR(50) NOT NULL,
   URL TEXT NOT NULL,
   Persona TEXT NOT NULL,
   Texto TEXT NOT NULL,
-  PRIMARY KEY (idPost),
-  UNIQUE INDEX idPost_UNIQUE (idPost))
+  PRIMARY KEY (idPost))
 ;
 
+ALTER TABLE Post ENGINE=InnoDB;
 
 -- -----------------------------------------------------
 -- Table Comentarios
@@ -30,8 +35,8 @@ CREATE TABLE IF NOT EXISTS Post (
 DROP TABLE IF EXISTS Comentarios ;
 
 CREATE TABLE IF NOT EXISTS Comentarios (
-  idComentarios VARCHAR(100) NOT NULL,
-  Post_idPost VARCHAR(100) NOT NULL,
+  idComentarios VARCHAR(50) NOT NULL,
+  Post_idPost VARCHAR(50) NOT NULL,
   Persona TEXT NOT NULL,
   Texto TEXT NULL,
   PRIMARY KEY (idComentarios, Post_idPost),
@@ -39,6 +44,7 @@ CREATE TABLE IF NOT EXISTS Comentarios (
   REFERENCES Post (idPost))
 ;
 
+ALTER TABLE Comentarios ENGINE=InnoDB;
 
 -- -----------------------------------------------------
 -- Table Respuesta
@@ -56,6 +62,8 @@ CREATE TABLE IF NOT EXISTS Respuesta (
   REFERENCES Comentarios (idComentarios , Post_idPost))
 ;
 
+ALTER TABLE Repuesta ENGINE=InnoDB;
+
 
 -- -----------------------------------------------------
 -- Table Compartir
@@ -71,6 +79,7 @@ CREATE TABLE IF NOT EXISTS Compartir (
   REFERENCES Post (idPost))
 ;
 
+ALTER TABLE Compartir ENGINE=InnoDB;
 
 -- -----------------------------------------------------
 -- Table Reacciones
@@ -87,5 +96,6 @@ CREATE TABLE IF NOT EXISTS Reacciones (
   REFERENCES Post (idPost))
 ;
 
+ALTER TABLE Reacciones ENGINE=InnoDB;
+
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
