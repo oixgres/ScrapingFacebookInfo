@@ -9,6 +9,9 @@ import urllib
 import urllib3
 import requests
 
-res = requests.get("http://conisoft.org/FacebookScraper/connection.php")
+obj={'id':'prueba', 'url':'prueba', 'user':'prueba', 'text':'text'}
+res = requests.post("http://conisoft.org/FacebookScraper/test_query.php", data=obj)
+
+
 
 print(res.text)

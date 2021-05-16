@@ -5,14 +5,7 @@
 -- Scrapping Facebook Data Base
 -- Guerra Cervantes Sergio Enrique
 
-GRANT ALL PRIVILEGES
-ON conisoft_facebook_scraper
-TO 'conisoft_fb'@'%'
-IDENTIFIED BY 'Fengoigres1094346';
-
-
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-
 
 -- -----------------------------------------------------
 -- Table Post
@@ -53,8 +46,8 @@ DROP TABLE IF EXISTS Respuesta ;
 
 CREATE TABLE IF NOT EXISTS Respuesta (
   idRespuesta INT NOT NULL AUTO_INCREMENT,
-  Persona VARCHAR(45) NULL,
-  Texto VARCHAR(100) NOT NULL,
+  Persona TEXT NULL,
+  Texto TEXT NOT NULL,
   Comentarios_idComentarios INT NOT NULL,
   Post_idPost INT NOT NULL,
   PRIMARY KEY (idRespuesta, Comentarios_idComentarios, Post_idPost),
@@ -62,7 +55,7 @@ CREATE TABLE IF NOT EXISTS Respuesta (
   REFERENCES Comentarios (idComentarios , Post_idPost))
 ;
 
-ALTER TABLE Repuesta ENGINE=InnoDB;
+ALTER TABLE Respuesta ENGINE=InnoDB;
 
 
 -- -----------------------------------------------------
