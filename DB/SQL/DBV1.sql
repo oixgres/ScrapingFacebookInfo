@@ -4,91 +4,87 @@
 -- MySQL Workbench Forward Engineering
 -- Scrapping Facebook Data Base
 -- Guerra Cervantes Sergio Enrique
+-- Feng Haosheng
 
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 
 -- -----------------------------------------------------
 -- Table Post
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Post ;
+DROP TABLE IF EXISTS post ;
 
-CREATE TABLE IF NOT EXISTS Post (
-  idPost VARCHAR(50) NOT NULL,
-  URL TEXT NOT NULL,
-  Persona TEXT NOT NULL,
-  Texto TEXT NOT NULL,
-  PRIMARY KEY (idPost))
-;
-
-ALTER TABLE Post ENGINE=InnoDB;
+CREATE TABLE IF NOT EXISTS post (
+  id_post VARCHAR(30) NOT NULL,
+  url TEXT NOT NULL,
+  persona VARCHAR(50) NOT NULL,
+  texto TEXT NOT NULL,
+  fecha DATE NULL,
+  PRIMARY KEY (id_post))
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- -----------------------------------------------------
 -- Table Comentarios
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Comentarios ;
+DROP TABLE IF EXISTS comentario ;
 
-CREATE TABLE IF NOT EXISTS Comentarios (
-  idComentarios VARCHAR(50) NOT NULL,
-  Post_idPost VARCHAR(50) NOT NULL,
-  Persona TEXT NOT NULL,
-  Texto TEXT NULL,
-  PRIMARY KEY (idComentarios, Post_idPost),
-  FOREIGN KEY (Post_idPost)
-  REFERENCES Post (idPost))
-;
-
-ALTER TABLE Comentarios ENGINE=InnoDB;
+CREATE TABLE IF NOT EXISTS comentario (
+  id_comentario VARCHAR(30) NOT NULL,
+  id_post  VARCHAR(30) NOT NULL,
+  persona TEXT NOT NULL,
+  texto TEXT NULL,
+  PRIMARY KEY (id_comentario),
+  FOREIGN KEY (id_post)
+  REFERENCES post (id_post))
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- -----------------------------------------------------
 -- Table Respuesta
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS Respuesta ;
 
-CREATE TABLE IF NOT EXISTS Respuesta (
-  idRespuesta INT NOT NULL AUTO_INCREMENT,
-  Persona TEXT NULL,
-  Texto TEXT NOT NULL,
-  Comentarios_idComentarios INT NOT NULL,
-  Post_idPost INT NOT NULL,
-  PRIMARY KEY (idRespuesta, Comentarios_idComentarios, Post_idPost),
-  FOREIGN KEY (Comentarios_idComentarios , Post_idPost)
-  REFERENCES Comentarios (idComentarios , Post_idPost))
-;
-
-ALTER TABLE Respuesta ENGINE=InnoDB;
+CREATE TABLE IF NOT EXISTS respuesta (
+  id_respuesta VARCHAR(30) NOT NULL,
+  id_comentario VARCHAR(30) NOT NULL,
+  persona TEXT NULL,
+  texto TEXT NOT NULL,
+  id_post INT NOT NULL,
+  PRIMARY KEY (id_respuesta),
+  FOREIGN KEY (id_comentario)
+  REFERENCES comentario (id_post))
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 
 -- -----------------------------------------------------
 -- Table Compartir
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Compartir ;
+DROP TABLE IF EXISTS compartir ;
 
-CREATE TABLE IF NOT EXISTS Compartir (
-  idCompartir INT NOT NULL AUTO_INCREMENT,
-  Post_idPost INT NOT NULL,
-  Persona VARCHAR(45) NULL,
-  PRIMARY KEY (idCompartir, Post_idPost),
-  FOREIGN KEY (Post_idPost)
+CREATE TABLE IF NOT EXISTS compartir (
+  id_compartir INT NOT NULL AUTO_INCREMENT,
+  id_post varchar(30) NOT NULL,
+  persona VARCHAR(50) NULL,
+  PRIMARY KEY (id_compartir),
+  FOREIGN KEY (id_post)
   REFERENCES Post (idPost))
-;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
-ALTER TABLE Compartir ENGINE=InnoDB;
+ALTER TABLE compartir AUTO_INCREMENT=0;
 
 -- -----------------------------------------------------
 -- Table Reacciones
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS Reacciones ;
 
-CREATE TABLE IF NOT EXISTS Reacciones (
-  idReacciones INT NOT NULL AUTO_INCREMENT,
-  Tipo VARCHAR(45) NULL,
-  Persona VARCHAR(45) NULL,
-  Post_idPost INT NOT NULL,
-  PRIMARY KEY (idReacciones, Post_idPost),
-  FOREIGN KEY (Post_idPost)
-  REFERENCES Post (idPost))
-;
+CREATE TABLE IF NOT EXISTS reaccion (
+  id_reaccion INT NOT NULL AUTO_INCREMENT,
+  tipo VARCHAR(10) NULL,
+  persona VARCHAR(50) NULL,
+  id_post VARCHAR(50) NOT NULL,
+  PRIMARY KEY (id_reaccion),
+  FOREIGN KEY (id_post)
+  REFERENCES post (id_post))
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
-ALTER TABLE Reacciones ENGINE=InnoDB;
+ALTER TABLE reacciones AUTO_INCREMENT=0;
 
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
