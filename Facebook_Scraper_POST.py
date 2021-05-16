@@ -68,21 +68,19 @@ class Facebook_Scraper_POST:
 
             time.sleep(1)
                 
-        '''
         data=[]
         for index in range(len(POST_URL)):
             element={}
-            element["post_id"]=POST_ID[index]
-            element["poster_name"]=POSTER_NAME[index]
-            element["post_text"]=POSTER_TEXT[index]
-            element["link"]=POST_URL[index]
+            element['id']=POST_ID[index]
+            element['url']=POST_URL[index] 
+            element['user']=POSTER_NAME[index]
+            element['text']=POSTER_TEXT[index]
             data.append(element)        
         '''
         data=[]
         for index in range(len(POST_URL)):
             POSTER_TEXT[index] = POSTER_TEXT[index].replace('', "").replace(",", "")
-            
-            
+                       
             element=[]
             element.append(POST_ID[index])
             element.append(POST_URL[index])
@@ -90,6 +88,7 @@ class Facebook_Scraper_POST:
             element.append(POSTER_TEXT[index])
             
             data.append(element)
+        '''
 
         return data
 
@@ -268,7 +267,7 @@ class Facebook_Scraper_POST:
                     print("To:"+to+'\n')
                     idComment=self.getIdComment(main[0])
                     #print("Id de comentarios:"+idComment)
-                    primaryComment['postId']=postId
+                    primaryComment['idPost']=postId
                     primaryComment['idComment']=idComment
                     primaryComment['name']=names[0].text
                     primaryComment['content']=main[0].text[positionName:]

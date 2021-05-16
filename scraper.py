@@ -8,6 +8,7 @@ from Facebook_Scraper_POST import Facebook_Scraper_POST
 from managerFile import readJson,writeJson
 import csv
 import pymysql
+import phpFunctions as php
 
 if __name__ == "__main__":
     
@@ -15,10 +16,6 @@ if __name__ == "__main__":
     h = Facebook_Scraper_POST(PATH)
     h.loginSession(URL=URL_LOGIN,user=user[0],password=password[0])
     data=h.collectionPOST(URL_GROUP,10)
-    
-    #Conexion SQL
-    connection = pymysql.connect(host = "174.136.52.201", user="conisoft_fb", password = "Fengoigres1094346", database = "conisoft_facebook_scraper")
-    cursor = connection.cursor()
     
     #data=readJson("comment.json")
     #print(data[0])
@@ -33,23 +30,16 @@ if __name__ == "__main__":
     #for index in range(len(data)):
     #    dataComments = h.getComments(data[index][3])
      
-        
+    
     for index in range(len(data)):
-        #writer.writerow(data[index])
-        
-        #Se almacena el post
-        query = "INSERT INTO Post(idPost, URL, Persona, Texto) VALUES(%s, %s, %s, %s);"
-        cursor.execute(query, data[index]);
+        php.insertPost(data[index])
         
         #Se obtienen comentarios y almacenan  almacenan los comentarios
-        dataComments = h.getComments(data[index][1], data[index][0])
-        
-        for i in range(len(dataComments)):
-            query = "INSERT INTO Comentarios(idComentarios, post_idPost, Persona, Texto) VALUES(%s, %s, %s, %s);"
-            cursor.execute(query, (dataComments[i]['primaryComment']['idComment'], data[index][0], dataComments[i]['primaryComment']['name'], dataComments[i]['primaryComment']['content']))
+        dataComments = h.getComments(data[index]['url'], data[index]['id'])
     
-    connection.close()
-
+        for i in range(len(dataComments)):
+            php.insertComment(dataComments[i]['primaryComment'])
+    
     #Obtener enlaces de los posts
     #json_post=h.collectionPOST(URL_GROUP,20)
     #writeJson(json_post,'post.json')
