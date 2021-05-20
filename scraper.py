@@ -32,7 +32,9 @@ if __name__ == "__main__":
      
     
     for index in range(len(data)):
-        php.insertPost(data[index])
+        res = php.insertPost(data[index])
+        
+        print(res)
         
         #Se obtienen comentarios y almacenan  almacenan los comentarios
         dataComments = h.getComments(data[index]['url'], data[index]['id'])

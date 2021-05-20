@@ -34,7 +34,8 @@ CREATE TABLE IF NOT EXISTS comentario (
   texto TEXT NULL,
   PRIMARY KEY (id_comentario),
   FOREIGN KEY (id_post)
-  REFERENCES post (id_post))
+  REFERENCES post (id_post)
+  ON DELETE CASCADE )
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- -----------------------------------------------------
@@ -45,12 +46,13 @@ DROP TABLE IF EXISTS Respuesta ;
 CREATE TABLE IF NOT EXISTS respuesta (
   id_respuesta VARCHAR(30) NOT NULL,
   id_comentario VARCHAR(30) NOT NULL,
-  persona TEXT NULL,
-  texto TEXT NOT NULL,
+  persona TEXT NOT NULL,
+  texto TEXT NULL,
   id_post INT NOT NULL,
   PRIMARY KEY (id_respuesta),
   FOREIGN KEY (id_comentario)
-  REFERENCES comentario (id_post))
+  REFERENCES comentario (id_post)
+  ON DELETE CASCADE)
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 
@@ -65,7 +67,8 @@ CREATE TABLE IF NOT EXISTS compartir (
   persona VARCHAR(50) NULL,
   PRIMARY KEY (id_compartir),
   FOREIGN KEY (id_post)
-  REFERENCES Post (idPost))
+  REFERENCES post (id_post)
+  ON DELETE CASCADE)
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 ALTER TABLE compartir AUTO_INCREMENT=0;
@@ -82,9 +85,10 @@ CREATE TABLE IF NOT EXISTS reaccion (
   id_post VARCHAR(50) NOT NULL,
   PRIMARY KEY (id_reaccion),
   FOREIGN KEY (id_post)
-  REFERENCES post (id_post))
+  REFERENCES post (id_post)
+  ON DELETE CASCADE)
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
-ALTER TABLE reacciones AUTO_INCREMENT=0;
+ALTER TABLE reaccion AUTO_INCREMENT=0;
 
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
