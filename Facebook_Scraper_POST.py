@@ -75,20 +75,7 @@ class Facebook_Scraper_POST:
             element['url']=POST_URL[index] 
             element['user']=POSTER_NAME[index]
             element['text']=POSTER_TEXT[index]
-            data.append(element)        
-        '''
-        data=[]
-        for index in range(len(POST_URL)):
-            POSTER_TEXT[index] = POSTER_TEXT[index].replace('', "").replace(",", "")
-                       
-            element=[]
-            element.append(POST_ID[index])
-            element.append(POST_URL[index])
-            element.append(POSTER_NAME[index])
-            element.append(POSTER_TEXT[index])
-            
             data.append(element)
-        '''
 
         return data
 
@@ -100,7 +87,7 @@ class Facebook_Scraper_POST:
     # @parameter file string
     # @parameter type_user string visited_name shared_name liked_name
 
-    def test_User_names(self,POST_ID,URL_type,type_names):
+    def getUsernames(self,POST_ID,URL_type,type_names):
         url=URL_type+str(POST_ID)
         self.driver.get(url)
 
@@ -114,20 +101,22 @@ class Facebook_Scraper_POST:
                 t=False
                 pass
         list_name = self.driver.find_elements_by_xpath(LIST_NAME_XPATH)
-        visited_names=[]
+        total_names=[]
         json_data={}
-        json_data["link_id"]=POST_ID
+        json_data['idPost']=POST_ID
         index = 1
         for name in list_name:
             if len(name.text)>0:
-                visited_name={}
-                key='name'+str(index)
-                visited_name[key]=name.text
-                visited_names.append(visited_name)
-                index+=1
+                user={}
+                user['idPost']= POST_ID
+                user['persona']=name.text
+                
+                
+                total_names.append(user)
                 print(name.text)
-        json_data["number"]=len(visited_names)
-        json_data[type_names]=visited_names
+                
+        #json_data["number"]=len(total_names)
+        json_data[type_names]=total_names
         return json_data
 
     def get_reactions(self, POST_ID, URL_type):
@@ -200,6 +189,7 @@ class Facebook_Scraper_POST:
 
 
     # https://m.facebook.com/story.php?story_fbid=2765539700363999&id=1629107234007257&anchor_composer=false
+    '''
     def test_comment_POST(self,post_id):
         url=URL_POST_LINK+str(post_id)
         self.driver.get(url)
@@ -227,7 +217,7 @@ class Facebook_Scraper_POST:
         json_post_comments['total_comments']=num_comment
         json_post_comments['comments']=comments
         return json_post_comments
-
+        '''
 
 
         # full_comments_boxs=self.driver.find_elements_by_css_selector('div._2a_i> div._2b04')
