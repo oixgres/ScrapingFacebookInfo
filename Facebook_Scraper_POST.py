@@ -133,7 +133,8 @@ class Facebook_Scraper_POST:
     def get_reactions(self, POST_ID, URL_type):
         url = URL_type+str(POST_ID)
         self.driver.get(url)
-
+        
+        #Arreglo con los resultados de la busqueda
         result = []
 
         #Creamos una copia por que los cortaremos y no queremos perder los datos
@@ -147,34 +148,37 @@ class Facebook_Scraper_POST:
             button.click()
             time.sleep(1)
             index = 0
-
+            
             #Identificamos cual reaccion es a la que le dimos click
             for path in allReactionsXPathArray:
-                username=[]
-                data={}
+                reactionGroup = {}
                 #Verificamos que exista la reaccion
                 if self.driver.find_elements_by_id(allReactionsIDArray[index]):
                     #Verificamos que este desplegada la info de la reaccion
                     if self.driver.find_elements_by_xpath(allReactionsXPathArray[index]):
-                        reaction_names = []
-                        reaction_names.append(allReactionsNameArray[index])
-                        data['reaction']=allReactionsNameArray[index]
                         list_name = self.driver.find_elements_by_xpath(allReactionsXPathArray[index])
+
+                        reactions= []
 
                         #Transformamos los nombres de quienes reaccionaron a texto
                         for name in list_name:
                             if len(name.text) > 0:
-                                reaction_names.append(name.text)
-                                username.append(name.text)
-                        #result.append(reaction_names)
+                                #Contenido de una reaccion
+                                data={}
+                                data['idPost'] = POST_ID
+                                data['tipo'] = allReactionsNameArray[index]
+                                data['persona'] = name.text
+                                reactions.append(data)
+                                
+                        #Las reacciones de un mismo tipo se almacenan en grupos
+                        reactionGroup['type'] = allReactionsNameArray[index]
+                        reactionGroup['reactions'] = reactions
+                        result.append(reactionGroup)
 
                         #Quitamos lo ya encontrado para no repetir busquedas
                         allReactionsXPathArray.pop(index)
                         allReactionsNameArray.pop(index)
                         allReactionsIDArray.pop(index)
-                        
-                        data['name']=username
-                        result.append(data)
                         break;
 
                 index+=1
@@ -275,10 +279,11 @@ class Facebook_Scraper_POST:
                 else:
                     print(names[0].text+":")
                     # print("IMAGEN O GIF ")
-                    # primaryComment['idComment']=idComment
-                    # primaryComment['name']=names[0].text
-                    # primaryComment['content']="IMAGEN O GIF "
-                    # primaryComment['to']="None"
+                    primaryComment['idPost']=postId
+                    primaryComment['idComment']=idComment+'G'
+                    primaryComment['name']=names[0].text
+                    primaryComment['content']="IMAGEN-GIF "
+                    primaryComment['to']=''
 
                 names.pop(0)
 

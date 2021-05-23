@@ -2,8 +2,6 @@
 
 require_once 'connection.php';
 
-mysqli_set_charset($conn, "utf8mb4");
-
 $id = $_POST['idComment'];
 $idPost = $_POST['idPost'];
 $user = $_POST['name'];

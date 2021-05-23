@@ -80,8 +80,8 @@ DROP TABLE IF EXISTS Reacciones ;
 
 CREATE TABLE IF NOT EXISTS reaccion (
   id_reaccion INT NOT NULL AUTO_INCREMENT,
-  tipo VARCHAR(10) NULL,
-  persona VARCHAR(50) NULL,
+  tipo VARCHAR(10) NOT NULL,
+  persona VARCHAR(50) NOT NULL,
   id_post VARCHAR(50) NOT NULL,
   PRIMARY KEY (id_reaccion),
   FOREIGN KEY (id_post)

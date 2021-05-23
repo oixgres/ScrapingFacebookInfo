@@ -32,15 +32,30 @@ if __name__ == "__main__":
      
     
     for index in range(len(data)):
-        res = php.insertPost(data[index])
-        
-        print(res)
+        #php.insertPost(data[index])
+        php.insert('insertPost.php', data[index])
         
         #Se obtienen comentarios y almacenan  almacenan los comentarios
         dataComments = h.getComments(data[index]['url'], data[index]['id'])
     
         for i in range(len(dataComments)):
-            php.insertComment(dataComments[i]['primaryComment'])
+            php.insert('insertComment.php',dataComments[i]['primaryComment'])
+            
+        #Se obtienen reacciones
+        dataReactions = h.get_reactions(data[index]['id'], URL_LIKED)
+        
+        
+        for i in range(len(dataReactions)):
+            if dataReactions[i]['type'] == 'TOTAL':
+                i = i + 1
+            else:
+                for j in range(len(dataReactions[i]['reactions'])):
+                    php.insert('insertReaction.php', dataReactions[i]['reactions'][j])
+                    
+        
+          
+            
+        #
     
     #Obtener enlaces de los posts
     #json_post=h.collectionPOST(URL_GROUP,20)
