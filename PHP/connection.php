@@ -7,4 +7,5 @@ $db = 'conisoft_facebook_scraper';
 
 $conn = mysqli_connect($host, $user, $pass, $db);
 
+mysqli_set_charset($conn, "utf8mb4");
 ?>

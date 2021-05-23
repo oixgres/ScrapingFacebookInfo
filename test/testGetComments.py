@@ -1,4 +1,5 @@
 from init import *
+'''
 import pymysql
 connection = pymysql.connect(host = "174.136.52.201", user="conisoft_fb", password = "Fengoigres1094346", database = "conisoft_facebook_scraper")
 cursor = connection.cursor()
@@ -30,3 +31,5 @@ for index in range(len(data)):
 #                         data[0]['secondaryComment'][0]['postId']));
  
 connection.close()
+'''
+h.getComments(url='https://m.facebook.com/groups/413938496303058/permalink/469954730701434', postId=469954730701434)

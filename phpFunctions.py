@@ -14,3 +14,7 @@ def insertPost(values):
 def insertComment(values):
     res = requests.post('http://conisoft.org/FacebookScraper/insertComment.php', data=values)
     return res.text
+
+def insert(file, values):
+    res = requests.post('http://conisoft.org/FacebookScraper/'+file, data=values)
+    return res.text

@@ -6,8 +6,6 @@ import json
 import re
 from Facebook_Scraper_POST import Facebook_Scraper_POST
 from managerFile import readJson,writeJson
-import csv
-import pymysql
 import phpFunctions as php
 
 if __name__ == "__main__":
@@ -15,30 +13,40 @@ if __name__ == "__main__":
     PATH = "chromedriver.exe"
     h = Facebook_Scraper_POST(PATH)
     h.loginSession(URL=URL_LOGIN,user=user[0],password=password[0])
+    
+    
     data=h.collectionPOST(URL_GROUP,10)
-    
-    #data=readJson("comment.json")
-    #print(data[0])
-    #query = "INSERT INTO Comentarios(idComentarios, post_id, persona, texto) VALUES(%s, %s, %s, %s);"
-    #cursor.execute(query, (data[0]['primaryComment']['idComment'],510769113286662,data[0]['primaryComment']['name'],data[0]['primaryComment']['content']));
-
-    #Creamos CSV
-    #with open('post.csv', 'w', newline='') as f:
-     #   writer = csv.writer(f, delimiter=',', quoting=csv.QUOTE_NONE, escapechar=";")
-    
-    #obtenemos los comentarios
-    #for index in range(len(data)):
-    #    dataComments = h.getComments(data[index][3])
-     
-    
     for index in range(len(data)):
-        php.insertPost(data[index])
+        
+        php.insert('insertPost.php', data[index])
         
         #Se obtienen comentarios y almacenan  almacenan los comentarios
+        time.sleep(1)
         dataComments = h.getComments(data[index]['url'], data[index]['id'])
     
         for i in range(len(dataComments)):
-            php.insertComment(dataComments[i]['primaryComment'])
+            php.insert('insertComment.php',dataComments[i]['primaryComment'])
+        
+        #Se obtienen las compartidas
+        time.sleep(1)
+        dataShares = h.getUsernames(data[index]['id'], URL_SHARED, 'shared_names')
+        
+        for i in range(len(dataShares['shared_names'])):
+            php.insert('insertShare.php', dataShares['shared_names'][i])
+        
+        #Se obtienen reacciones
+        time.sleep(1)
+        dataReactions = h.get_reactions(data[index]['id'], URL_LIKED)
+        
+        #Almacenamos las reacciones
+        for i in range(len(dataReactions)):
+            #por el momento no es necesario almacenar el total
+            if dataReactions[i]['type'] == 'TOTAL':
+                i = i + 1
+            else:
+                for j in range(len(dataReactions[i]['reactions'])):
+                    php.insert('insertReaction.php', dataReactions[i]['reactions'][j])   
+        #
     
     #Obtener enlaces de los posts
     #json_post=h.collectionPOST(URL_GROUP,20)

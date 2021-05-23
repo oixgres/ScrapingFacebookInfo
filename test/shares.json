@@ -1,42 +1,65 @@
 {
-    "link_id": 2789506314634004,
-    "number": 12,
+    "idPost": 2789506314634004,
     "shared_names": [
         {
-            "name1": "Miguel Ángel Zuleta Barrientos"
+            "idPost": 2789506314634004,
+            "persona": "Luis Rodriguez"
         },
         {
-            "name2": "Mario Chapa Franco"
+            "idPost": 2789506314634004,
+            "persona": "Nintendo Fans"
         },
         {
-            "name3": "Mario Chapa Franco"
+            "idPost": 2789506314634004,
+            "persona": "Julian Adelheid"
         },
         {
-            "name4": "Animetion"
+            "idPost": 2789506314634004,
+            "persona": "Miguel Ángel Zuleta Barrientos"
         },
         {
-            "name5": "Jorge Luis"
+            "idPost": 2789506314634004,
+            "persona": "Mario Chapa Franco"
         },
         {
-            "name6": "Barbara Meza"
+            "idPost": 2789506314634004,
+            "persona": "Mario Chapa Franco"
         },
         {
-            "name7": "Daniel Ramirez"
+            "idPost": 2789506314634004,
+            "persona": "Animetion"
         },
         {
-            "name8": "Lael Vazquez"
+            "idPost": 2789506314634004,
+            "persona": "Jorge Luis"
         },
         {
-            "name9": "Ror Mia"
+            "idPost": 2789506314634004,
+            "persona": "Barbara Meza"
         },
         {
-            "name10": "Mauricio Mairena"
+            "idPost": 2789506314634004,
+            "persona": "Daniel Ramirez"
         },
         {
-            "name11": "Alondra Velazquez"
+            "idPost": 2789506314634004,
+            "persona": "Lael Vazquez"
         },
         {
-            "name12": "Jesús Villanueva Lezama"
+            "idPost": 2789506314634004,
+            "persona": "Ror Mia"
+        },
+        {
+            "idPost": 2789506314634004,
+            "persona": "Mauricio Mairena"
+        },
+        {
+            "idPost": 2789506314634004,
+            "persona": "Alondra Velazquez"
+        },
+        {
+            "idPost": 2789506314634004,
+            "persona": "Jesús Villanueva Lezama"
         }
     ]
 }
