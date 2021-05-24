@@ -41,17 +41,18 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 -- -----------------------------------------------------
 -- Table Respuesta
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Respuesta ;
+DROP TABLE IF EXISTS respuesta ;
 
 CREATE TABLE IF NOT EXISTS respuesta (
   id_respuesta VARCHAR(30) NOT NULL,
+  id_post VARCHAR(30) NOT NULL,
   id_comentario VARCHAR(30) NOT NULL,
   persona TEXT NOT NULL,
   texto TEXT NULL,
-  id_post INT NOT NULL,
+  persona_destinada varchar(30)
   PRIMARY KEY (id_respuesta),
   FOREIGN KEY (id_comentario)
-  REFERENCES comentario (id_post)
+  REFERENCES comentario (id_comentario)
   ON DELETE CASCADE)
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
