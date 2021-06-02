@@ -13,17 +13,16 @@ if __name__ == "__main__":
     PATH = "chromedriver.exe"
     h = Facebook_Scraper_POST(PATH)
     h.loginSession(URL=URL_LOGIN,user=user[0],password=password[0])
-    # data=readJson("comment.json")
-    # print(data[0]["secondaryComment"])
-    # error=php.insert('insertSecondaryComment.php',data[0]["secondaryComment"][0])
-    # print(error)
-    #data[0]["secondaryComment"]
+   
+    
+    #Se obtiene el post
     data=h.collectionPOST(URL_GROUP,15)
+    
     for index in range(len(data)):
         
         php.insert('insertPost.php', data[index])
         
-        #Se obtienen comentarios y almacenan  almacenan los comentarios
+        #Se obtienen comentarios y respuestas
         time.sleep(1)
         dataComments = h.getComments(data[index]['url'], data[index]['id'])
     
@@ -34,6 +33,14 @@ if __name__ == "__main__":
                 for j in range(len(dataComments[i]['secondaryComment'])):
                     print(j)
                     php.insert('insertSecondaryComment.php',dataComments[i]['secondaryComment'][j])
+        
+        #Se obtiene quienes vieron el post
+        time.sleep(1)
+        dataView = h.getUsernames(data[index]['id'], URL_VISITED, 'view_names')
+        
+        for i in range(len(dataView['view_names'])):
+            php.insert('insertView.php', dataView['view_names'][i]);
+        
         
         #Se obtienen las compartidas
         time.sleep(1)

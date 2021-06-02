@@ -115,7 +115,6 @@ class Facebook_Scraper_POST:
                 total_names.append(user)
                 print(name.text)
                 
-        #json_data["number"]=len(total_names)
         json_data[type_names]=total_names
         return json_data
 
