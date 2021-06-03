@@ -12,7 +12,7 @@ if __name__ == "__main__":
     
     PATH = "chromedriver.exe"
     h = Facebook_Scraper_POST(PATH)
-    h.loginSession(URL=URL_LOGIN,user=user[0],password=password[0])
+    h.loginSession(URL=URL_LOGIN,user=user[2],password=password[2])
    
     
     #Se obtiene el post
