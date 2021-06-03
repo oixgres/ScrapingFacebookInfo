@@ -6,6 +6,7 @@ Created on Sat May 15 17:08:01 2021
 """
 
 import requests
+import json
 
 def insertPost(values):
     res = requests.post('http://conisoft.org/FacebookScraper/insertPost.php', data=values)
@@ -17,4 +18,4 @@ def insertComment(values):
 
 def insert(file, values):
     res = requests.post('http://conisoft.org/FacebookScraper/'+file, data=values)
-    return res.text
+    print(res.json()['res'])

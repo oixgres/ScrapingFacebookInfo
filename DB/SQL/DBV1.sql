@@ -18,7 +18,6 @@ CREATE TABLE IF NOT EXISTS post (
   url TEXT NOT NULL,
   persona VARCHAR(50) NOT NULL,
   texto TEXT NOT NULL,
-  fecha DATE NULL,
   PRIMARY KEY (id_post))
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
@@ -49,7 +48,7 @@ CREATE TABLE IF NOT EXISTS respuesta (
   id_comentario VARCHAR(30) NOT NULL,
   persona TEXT NOT NULL,
   texto TEXT NULL,
-  persona_destinada varchar(30)
+  persona_destinada varchar(30),
   PRIMARY KEY (id_respuesta),
   FOREIGN KEY (id_comentario)
   REFERENCES comentario (id_comentario)
@@ -77,7 +76,7 @@ ALTER TABLE compartir AUTO_INCREMENT=0;
 -- -----------------------------------------------------
 -- Table Reacciones
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS Reacciones ;
+DROP TABLE IF EXISTS reaccion ;
 
 CREATE TABLE IF NOT EXISTS reaccion (
   id_reaccion INT NOT NULL AUTO_INCREMENT,
@@ -91,5 +90,23 @@ CREATE TABLE IF NOT EXISTS reaccion (
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 ALTER TABLE reaccion AUTO_INCREMENT=0;
+
+-- -----------------------------------------------------
+-- Table visto
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS visto ;
+
+CREATE TABLE IF NOT EXISTS visto (
+  id_visto INT NOT NULL AUTO_INCREMENT,
+  id_post VARCHAR(50) NOT NULL,
+  persona VARCHAR(50) NOT NULL,
+  PRIMARY KEY (id_visto),
+  FOREIGN KEY (id_post)
+  REFERENCES post (id_post)
+  ON DELETE CASCADE)
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+ALTER TABLE visto AUTO_INCREMENT=0;
+
 
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
