@@ -7,10 +7,4 @@ function getFirstQueryElement($conn, $table, $item, $coincidence, $keyCoincidenc
   $res = mysqli_fetch_array($res);
   return $res[0];
 }
-
-function checkIfExists($conn, $table, $id){
-
-}
-
-
 ?>

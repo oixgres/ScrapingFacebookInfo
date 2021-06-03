@@ -49,12 +49,12 @@ class Facebook_Scraper_POST:
             data_post = self.driver.execute_script(js_script)
             POST_ID.append(re.findall(r"top_level_post_id.(.+?):",str(data_post))[0])
             POST_URL.append(URL_POST_LINK+str(POST_ID[index]))
-            print(POST_ID[index])
+            #print(POST_ID[index])
 
             index+=1
         for index in range(number_POST):
             self.driver.get(POST_URL[index])
-            print("Buscando: "+POST_URL[index])
+            #print("Buscando: "+POST_URL[index])
             try:
                 poster_text=self.driver.find_element_by_xpath(POST_TEXT_XPATH)
                 POSTER_TEXT.append(poster_text.text)
@@ -113,7 +113,7 @@ class Facebook_Scraper_POST:
                 
                 
                 total_names.append(user)
-                print(name.text)
+                #print(name.text)
                 
         json_data[type_names]=total_names
         return json_data
@@ -214,7 +214,7 @@ class Facebook_Scraper_POST:
 
                 if main:
                     
-                    print(names[0].text+":")
+                    #print(names[0].text+":")
                     to=self.getToName(main[0])
                     # if to : positionName=len(to)+1
                     # else : positionName=0
@@ -223,18 +223,18 @@ class Facebook_Scraper_POST:
                     idComment=self.getIdComment(main[0])
                     #print("Id de comentarios:"+idComment)
                     primaryComment['idPost']=postId
-                    primaryComment['fromId']=idComment
+                    primaryComment['idComment']=idComment
                     primaryComment['name']=names[0].text
                     primaryComment['content']=main[0].text
-                    primaryComment['toName']=to
+                    primaryComment['to']=to
                 else:
-                    print(names[0].text+":")
+                    #print(names[0].text+":")
                     # print("IMAGEN O GIF ")
                     primaryComment['idPost']=postId
-                    primaryComment['fromId']=idComment+'G'
+                    primaryComment['idComment']=idComment+'G'
                     primaryComment['name']=names[0].text
                     primaryComment['content']="IMAGEN-GIF "
-                    primaryComment['toName']=''
+                    primaryComment['to']=''
 
                 names.pop(0)
 
@@ -243,10 +243,10 @@ class Facebook_Scraper_POST:
                 if answers:
                     for answer in answers:
                         secondaryComment={}
-                        print("\t\t"+names[0].text+":")
+                        #print("\t\t"+names[0].text+":")
                         to=self.getToName(answer)
-                        print("\t\t"+answer.text)
-                        print("\t\tTo:"+to+'\n')
+                        #print("\t\t"+answer.text)
+                        #print("\t\tTo:"+to+'\n')
                         secondaryIdComment=self.getIdComment(answer)
                         secondaryComment['postId']=postId
                         secondaryComment['fromId']=secondaryIdComment
@@ -261,10 +261,10 @@ class Facebook_Scraper_POST:
                     if answers:
                         for answer in answers:
                             secondaryComment={}
-                            print("\t\t"+names[0].text+":")
+                            #print("\t\t"+names[0].text+":")
                             to=self.getToName(answer)
-                            print("\t\t"+answer.text)
-                            print("\t\tTo:"+to+'\n')
+                            #print("\t\t"+answer.text)
+                            #print("\t\tTo:"+to+'\n')
                             secondaryIdComment=self.getIdComment(answer)
                             secondaryComment['postId']=postId
                             secondaryComment['fromId']=secondaryIdComment
@@ -278,10 +278,10 @@ class Facebook_Scraper_POST:
                         answers = comment.find_elements_by_xpath(TRADUCT_COMMENT)
                         for answer in answers:
                             secondaryComment={}
-                            print("\t\t"+names[0].text+":")
+                            #print("\t\t"+names[0].text+":")
                             to=self.getToName(answer)
-                            print("\t\t"+answer.text+"\n")
-                            print("\t\tTo:"+to+'\n')
+                            #print("\t\t"+answer.text+"\n")
+                            #print("\t\tTo:"+to+'\n')
                             secondaryIdComment=self.getIdComment(answer)
                             secondaryComment['postId']=postId
                             secondaryComment['IdComment']=secondaryIdComment

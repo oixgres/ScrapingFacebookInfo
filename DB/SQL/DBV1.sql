@@ -18,7 +18,6 @@ CREATE TABLE IF NOT EXISTS post (
   url TEXT NOT NULL,
   persona VARCHAR(50) NOT NULL,
   texto TEXT NOT NULL,
-  fecha DATE NULL,
   PRIMARY KEY (id_post))
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
@@ -49,7 +48,7 @@ CREATE TABLE IF NOT EXISTS respuesta (
   id_comentario VARCHAR(30) NOT NULL,
   persona TEXT NOT NULL,
   texto TEXT NULL,
-  persona_destinada varchar(30)
+  persona_destinada varchar(30),
   PRIMARY KEY (id_respuesta),
   FOREIGN KEY (id_comentario)
   REFERENCES comentario (id_comentario)

@@ -16,12 +16,11 @@ if __name__ == "__main__":
    
     
     #Se obtiene el post
-    data=h.collectionPOST(URL_GROUP,15)
+    data=h.collectionPOST(URL_GROUP,20)
     
-    for index in range(len(data)):
-        
+    for index in range(len(data)):        
         php.insert('insertPost.php', data[index])
-        
+
         #Se obtienen comentarios y respuestas
         time.sleep(1)
         dataComments = h.getComments(data[index]['url'], data[index]['id'])
@@ -31,9 +30,9 @@ if __name__ == "__main__":
             
             if len(dataComments[i]['secondaryComment'])>0:
                 for j in range(len(dataComments[i]['secondaryComment'])):
-                    print(j)
                     php.insert('insertSecondaryComment.php',dataComments[i]['secondaryComment'][j])
         
+        '''
         #Se obtiene quienes vieron el post
         time.sleep(1)
         dataView = h.getUsernames(data[index]['id'], URL_VISITED, 'view_names')
@@ -61,4 +60,5 @@ if __name__ == "__main__":
             else:
                 for j in range(len(dataReactions[i]['reactions'])):
                     php.insert('insertReaction.php', dataReactions[i]['reactions'][j])   
+        '''
         
