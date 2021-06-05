@@ -98,7 +98,7 @@ class Facebook_Scraper_POST:
         while t:
             try:
                 self.driver.find_element_by_xpath(BOTTOM_SEE_MORE_XPATH).click()   # clic al elemento ver mas
-                time.sleep(2)
+                time.sleep(3)
             except NoSuchElementException:
                 t=False
                 pass
@@ -183,7 +183,7 @@ class Facebook_Scraper_POST:
 
             for r in range(10):
                 self.driver.execute_script("window.scrollBy(0,1500)")
-            time.sleep(2)
+            time.sleep(3)
             scrollHeight_scrolled=self.driver.execute_script("return document.body.scrollHeight;")
             if scrollHeight_scrolled==scrollHeight_now:
                 t=False
@@ -215,7 +215,6 @@ class Facebook_Scraper_POST:
                     break; 
 
                 if main:
-                    
                     #print(names[0].text+":")
                     to=self.getToName(main[0])
                     # if to : positionName=len(to)+1
@@ -226,15 +225,16 @@ class Facebook_Scraper_POST:
                     #print("Id de comentarios:"+idComment)
                     primaryComment['idPost']=postId
                     primaryComment['idComment']=idComment
-                    primaryComment['name']=names[0].text
+                    primaryComment['name']=main[0].find_element_by_xpath(NAMES_COMMENT_ALT).text
                     primaryComment['content']=main[0].text
                     primaryComment['to']=to
                 else:
+                    main = comment.find_elements_by_xpath(MAIN_COMMENT_GIF)
                     #print(names[0].text+":")
-                    # print("IMAGEN O GIF ")
+                    #print("IMAGEN O GIF ")
                     primaryComment['idPost']=postId
                     primaryComment['idComment']=idComment+'G'
-                    primaryComment['name']=names[0].text
+                    primaryComment['name']=main[0].find_element_by_xpath(NAMES_COMMENT_ALT).text
                     primaryComment['content']="IMAGEN-GIF "
                     primaryComment['to']=''
 
@@ -252,7 +252,7 @@ class Facebook_Scraper_POST:
                         secondaryIdComment=self.getIdComment(answer)
                         secondaryComment['postId']=postId
                         secondaryComment['fromId']=secondaryIdComment
-                        secondaryComment['name']=names[0].text
+                        secondaryComment['name']=answer.find_element_by_xpath(NAMES_COMMENT_ALT).text
                         secondaryComment['content']=answer.text
                         secondaryComment['toId']=idComment
                         secondaryComment['toName']=to
@@ -270,7 +270,7 @@ class Facebook_Scraper_POST:
                             secondaryIdComment=self.getIdComment(answer)
                             secondaryComment['postId']=postId
                             secondaryComment['fromId']=secondaryIdComment
-                            secondaryComment['name']=names[0].text
+                            secondaryComment['name']=answer.find_element_by_xpath(NAMES_COMMENT_ALT).text
                             secondaryComment['content']=answer.text
                             secondaryComment['toId']=idComment
                             secondaryComment['toName']=to
@@ -286,13 +286,30 @@ class Facebook_Scraper_POST:
                             #print("\t\tTo:"+to+'\n')
                             secondaryIdComment=self.getIdComment(answer)
                             secondaryComment['postId']=postId
-                            secondaryComment['IdComment']=secondaryIdComment
-                            secondaryComment['name']=names[0].text
+                            secondaryComment['fromId']=secondaryIdComment
+                            secondaryComment['name']=answer.find_element_by_xpath(NAMES_COMMENT_ALT).text
                             secondaryComment['content']=answer.text
-                            secondaryComment['toIdComment']=idComment
-                            secondaryComment['to']=to
+                            secondaryComment['toId']=idComment
+                            secondaryComment['toName']=to
                             secondaryComments.append(secondaryComment)
                             names.pop(0)
+                        else:
+                            answers = comment.find_elements_by_xpath(SEC_COMMENT_GIF_AND_TEXT)
+                            for answer in answers:
+                                secondaryComment={}
+                                #print("\t\t"+names[0].text+":")
+                                to=self.getToName(answer)
+                                #print("\t\t"+answer.text+"\n")
+                                #print("\t\tTo:"+to+'\n')
+                                secondaryIdComment=self.getIdComment(answer)
+                                secondaryComment['postId']=postId
+                                secondaryComment['fromId']=secondaryIdComment
+                                secondaryComment['name']=answer.find_element_by_xpath(NAMES_COMMENT_ALT).text
+                                secondaryComment['content']=answer.text
+                                secondaryComment['toId']=idComment
+                                secondaryComment['toName']=to
+                                secondaryComments.append(secondaryComment)
+                                names.pop(0)
                 comments['primaryComment']=primaryComment
                 comments['secondaryComment']=secondaryComments
                 result.append(comments)
@@ -334,7 +351,7 @@ class Facebook_Scraper_POST:
         while t:
             try:
                 self.driver.find_element_by_xpath('//div[@class="async_elem"]').click()   # clic al elemento ver mas
-                time.sleep(2)
+                time.sleep(3)
             except NoSuchElementException:
                 t=False
                 pass

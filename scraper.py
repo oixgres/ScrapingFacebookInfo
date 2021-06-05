@@ -12,25 +12,57 @@ if __name__ == "__main__":
     
     PATH = "chromedriver.exe"
     h = Facebook_Scraper_POST(PATH)
-    h.loginSession(URL=URL_LOGIN,user=user[2],password=password[2])
+    h.loginSession(URL=URL_LOGIN,user=user[3],password=password[3])
    
+    res = 0
     
+    '''
+    #Se obtienen comentarios y respuestas
+    time.sleep(1)
+    dataComments = h.getComments('https://m.facebook.com/groups/413938496303058/permalink/469954730701434', '469954730701434')
+    
+    print(dataComments)
+    
+    for i in range(len(dataComments)):
+        
+        
+        if res == -1:
+            break
+        print(dataComments[i]['primaryComment'])
+        res = php.insert('insertComment.php',dataComments[i]['primaryComment'])
+        
+        if len(dataComments[i]['secondaryComment'])>0:
+            for j in range(len(dataComments[i]['secondaryComment'])):
+                print(dataComments[i]['secondaryComment'][j])
+                if res == -1:
+                    break
+                res = php.insert('insertSecondaryComment.php',dataComments[i]['secondaryComment'][j])
+    
+    '''
     #Se obtiene el post
     data=h.collectionPOST(URL_GROUP,100)
     
-    for index in range(len(data)):        
-        php.insert('insertPost.php', data[index])
+    for index in range(len(data)):
+        if res == -1:
+            break
+        res = php.insert('insertPost.php', data[index])
 
         #Se obtienen comentarios y respuestas
         time.sleep(1)
         dataComments = h.getComments(data[index]['url'], data[index]['id'])
     
         for i in range(len(dataComments)):
-            php.insert('insertComment.php',dataComments[i]['primaryComment'])
+            if res == -1:
+                break
+            res = php.insert('insertComment.php',dataComments[i]['primaryComment'])
+            
             
             if len(dataComments[i]['secondaryComment'])>0:
                 for j in range(len(dataComments[i]['secondaryComment'])):
-                    php.insert('insertSecondaryComment.php',dataComments[i]['secondaryComment'][j])
+                    if res == -1:
+                        break
+                    res = php.insert('insertSecondaryComment.php',dataComments[i]['secondaryComment'][j])
+                    
         
         
         #Se obtiene quienes vieron el post
@@ -38,15 +70,19 @@ if __name__ == "__main__":
         dataView = h.getUsernames(data[index]['id'], URL_VISITED, 'view_names')
         
         for i in range(len(dataView['view_names'])):
-            php.insert('insertView.php', dataView['view_names'][i]);
-        
-        
+            if res == -1:
+                break
+            res = php.insert('insertView.php', dataView['view_names'][i])
+            
         #Se obtienen las compartidas
         time.sleep(1)
         dataShares = h.getUsernames(data[index]['id'], URL_SHARED, 'shared_names')
         
         for i in range(len(dataShares['shared_names'])):
-            php.insert('insertShare.php', dataShares['shared_names'][i])
+            if res == -1:
+                break
+            res = php.insert('insertShare.php', dataShares['shared_names'][i])
+            
         
         #Se obtienen reacciones
         time.sleep(1)
@@ -59,5 +95,13 @@ if __name__ == "__main__":
                 i = i + 1
             else:
                 for j in range(len(dataReactions[i]['reactions'])):
-                    php.insert('insertReaction.php', dataReactions[i]['reactions'][j])   
+                    if res == -1:
+                        break
+                    res = php.insert('insertReaction.php', dataReactions[i]['reactions'][j])
+        
+                    
+    if res == 0:
+        print("EXITO")
+    else:
+        print("ERROR AL EJECUTAR EL PROGRAMA")
         
