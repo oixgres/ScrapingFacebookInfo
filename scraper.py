@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from dato import *
+from config import *
 import time
 import json
 import re
