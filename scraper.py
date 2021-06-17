@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from dato import *
+from config import *
 import time
 import json
 import re
@@ -12,7 +13,7 @@ if __name__ == "__main__":
     
     PATH = "chromedriver.exe"
     h = Facebook_Scraper_POST(PATH)
-    h.loginSession(URL=URL_LOGIN,user=user[3],password=password[3])
+    h.loginSession(URL=URL_LOGIN,user=user,password=password)
    
     res = 0
     
