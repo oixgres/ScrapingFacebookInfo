@@ -24,7 +24,7 @@ if(mysqli_query($conn, $query))
 else
   echo json_encode(array(
     'res' => 'ERROR',
-    'error' => 'ERROR AL AGREGAR COMENTARIO'
+    'error' => "ERROR AL AGREGAR COMENTARIO DEL USUARIO".$user."POST ".$idPost
   ));
 
 mysqli_close($conn);

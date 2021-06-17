@@ -19,10 +19,10 @@ class Facebook_Scraper_POST:
 
 
     def loginSession(self,URL,user ,password):
-        self.driver.get(URL)                                                        # acceder page-login
-        self.driver.find_element_by_id(LOGIN_EMAIL_ID).send_keys(user)             # introduce usuario
-        self.driver.find_element_by_name(PASSWORD_NAME).send_keys(password)                # introduce password
-        self.driver.find_element_by_name(PASSWORD_NAME).send_keys(Keys.RETURN)             # enter
+        self.driver.get(URL) # acceder page-login
+        self.driver.find_element_by_id(LOGIN_EMAIL_ID).send_keys(user) # introduce usuario
+        self.driver.find_element_by_name(PASSWORD_NAME).send_keys(password) # introduce password
+        self.driver.find_element_by_name(PASSWORD_NAME).send_keys(Keys.RETURN) # enter
         time.sleep(3)
         iniciar_seccion_no_toque = self.driver.find_element_by_xpath(INPUT_NO_TOUCH_XPATH)
         iniciar_seccion_no_toque.click()
@@ -36,26 +36,25 @@ class Facebook_Scraper_POST:
         POSTER_TEXT=[]
 
         index=0
-        self.driver.get(URL)                                                 # acceder la pagina del grupo
-        self.scroll_max()                                                    # mostrar todas las publicaciones
+        self.driver.get(URL)  # acceder la pagina del grupo
+        self.controlled_scroll(number_POST) # mostrar todas las publicaciones
 
-        links = self.driver.find_elements_by_xpath(ARTICLE_LINK_XPATH)    # Encontrar todos elementos article(enlace de la publicacion)
+        links = self.driver.find_elements_by_xpath(ARTICLE_LINK_XPATH) # Encontrar todos elementos article(enlace de la publicacion)
 
         if number_POST>len(links):
             number_POST=len(links)-2 
-                                                 # Obtener los post basando en el number_POST
+        
+        # Obtener los post basando en el number_POST
         for link in range(number_POST):
             print(index)
             js_script="return document.getElementsByTagName('article')["+str(index)+"].dataset.store"
             data_post = self.driver.execute_script(js_script)
             POST_ID.append(re.findall(r"top_level_post_id.(.+?):",str(data_post))[0])
             POST_URL.append(URL_POST_LINK+str(POST_ID[index]))
-            #print(POST_ID[index])
             index+=1
         
         for index in range(number_POST):
             self.driver.get(POST_URL[index])
-            #print("Buscando: "+POST_URL[index])
             print(index)
             try:
                 poster_text=self.driver.find_element_by_xpath(POST_TEXT_XPATH)
@@ -82,13 +81,11 @@ class Facebook_Scraper_POST:
         return data
 
 
-    #https://m.facebook.com/ufi/group/seenby/profile/browser/?id=433655667664674
     #Obtener usuarios que visitaron el post
 
     # @parameter POST_ID int
     # @parameter file string
     # @parameter type_user string visited_name shared_name liked_name
-
     def getUsernames(self,POST_ID,URL_type,type_names):
         url=URL_type+str(POST_ID)
         self.driver.get(url)
@@ -175,7 +172,18 @@ class Facebook_Scraper_POST:
         return result
 
 
-
+    def controlled_scroll(self, times):
+        for i in range(times):
+            scrollHeight_now = self.driver.execute_script("return document.body.scrollHeight;")
+        
+            for r in range(10):
+                self.driver.execute_script("window.scrollBy(0,1500)")
+                
+            time.sleep(3)
+            scrollHeight_scrolled=self.driver.execute_script("return document.body.scrollHeight;")
+            if scrollHeight_scrolled==scrollHeight_now:
+                break
+                
     def scroll_max(self):
         t = True
         while t:
@@ -187,10 +195,6 @@ class Facebook_Scraper_POST:
             scrollHeight_scrolled=self.driver.execute_script("return document.body.scrollHeight;")
             if scrollHeight_scrolled==scrollHeight_now:
                 t=False
-
-
-    # https://m.facebook.com/story.php?story_fbid=2765539700363999&id=1629107234007257&anchor_composer=false
-
 
     def getComments(self, url, postId):
     
@@ -215,14 +219,8 @@ class Facebook_Scraper_POST:
                     break; 
 
                 if main:
-                    #print(names[0].text+":")
                     to=self.getToName(main[0])
-                    # if to : positionName=len(to)+1
-                    # else : positionName=0
-                    # print(main[0].text[positionName:])
-                    # print("To:"+to+'\n')
                     idComment=self.getIdComment(main[0])
-                    #print("Id de comentarios:"+idComment)
                     primaryComment['idPost']=postId
                     primaryComment['idComment']=idComment
                     primaryComment['name']=main[0].find_element_by_xpath(NAMES_COMMENT_ALT).text
@@ -230,8 +228,6 @@ class Facebook_Scraper_POST:
                     primaryComment['to']=to
                 else:
                     main = comment.find_elements_by_xpath(MAIN_COMMENT_GIF)
-                    #print(names[0].text+":")
-                    #print("IMAGEN O GIF ")
                     primaryComment['idPost']=postId
                     primaryComment['idComment']=idComment+'G'
                     primaryComment['name']=main[0].find_element_by_xpath(NAMES_COMMENT_ALT).text
@@ -245,10 +241,7 @@ class Facebook_Scraper_POST:
                 if answers:
                     for answer in answers:
                         secondaryComment={}
-                        #print("\t\t"+names[0].text+":")
                         to=self.getToName(answer)
-                        #print("\t\t"+answer.text)
-                        #print("\t\tTo:"+to+'\n')
                         secondaryIdComment=self.getIdComment(answer)
                         secondaryComment['postId']=postId
                         secondaryComment['fromId']=secondaryIdComment
@@ -263,10 +256,7 @@ class Facebook_Scraper_POST:
                     if answers:
                         for answer in answers:
                             secondaryComment={}
-                            #print("\t\t"+names[0].text+":")
                             to=self.getToName(answer)
-                            #print("\t\t"+answer.text)
-                            #print("\t\tTo:"+to+'\n')
                             secondaryIdComment=self.getIdComment(answer)
                             secondaryComment['postId']=postId
                             secondaryComment['fromId']=secondaryIdComment
@@ -280,10 +270,7 @@ class Facebook_Scraper_POST:
                         answers = comment.find_elements_by_xpath(TRADUCT_COMMENT)
                         for answer in answers:
                             secondaryComment={}
-                            #print("\t\t"+names[0].text+":")
                             to=self.getToName(answer)
-                            #print("\t\t"+answer.text+"\n")
-                            #print("\t\tTo:"+to+'\n')
                             secondaryIdComment=self.getIdComment(answer)
                             secondaryComment['postId']=postId
                             secondaryComment['fromId']=secondaryIdComment
@@ -297,10 +284,7 @@ class Facebook_Scraper_POST:
                             answers = comment.find_elements_by_xpath(SEC_COMMENT_GIF_AND_TEXT)
                             for answer in answers:
                                 secondaryComment={}
-                                #print("\t\t"+names[0].text+":")
                                 to=self.getToName(answer)
-                                #print("\t\t"+answer.text+"\n")
-                                #print("\t\tTo:"+to+'\n')
                                 secondaryIdComment=self.getIdComment(answer)
                                 secondaryComment['postId']=postId
                                 secondaryComment['fromId']=secondaryIdComment
@@ -328,6 +312,7 @@ class Facebook_Scraper_POST:
         except  NoSuchElementException:
             pass
         return name
+     
     #Da click a todos los comentarios secundarios
     def see_comments_secondary(self,class_name):
         for bton in self.driver.find_elements_by_class_name(class_name):
@@ -346,7 +331,6 @@ class Facebook_Scraper_POST:
                     pass
 
     def scroll_to_max_height_comment(self):
-
         t=True
         while t:
             try:

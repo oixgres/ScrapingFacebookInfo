@@ -22,7 +22,7 @@ else
   else
     echo json_encode(array(
       'res' => 'ERROR',
-      'error' => 'ERROR AL AGREGAR COMPARTIDA'
+      'error' => "ERROR AL AGREGAR COMPARTIDA DEL USUARIO ".$user." DEL POST ".$id
     ));
 }
 

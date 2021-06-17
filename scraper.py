@@ -8,39 +8,16 @@ from Facebook_Scraper_POST import Facebook_Scraper_POST
 from managerFile import readJson,writeJson
 import phpFunctions as php
 
-if __name__ == "__main__":
-    
+
+def getAllInfo(user, password, url_group, amount = 1):
     PATH = "chromedriver.exe"
     h = Facebook_Scraper_POST(PATH)
-    h.loginSession(URL=URL_LOGIN,user=user[3],password=password[3])
+    h.loginSession(URL=URL_LOGIN,user=user,password=password)
    
     res = 0
     
-    '''
-    #Se obtienen comentarios y respuestas
-    time.sleep(1)
-    dataComments = h.getComments('https://m.facebook.com/groups/413938496303058/permalink/469954730701434', '469954730701434')
-    
-    print(dataComments)
-    
-    for i in range(len(dataComments)):
-        
-        
-        if res == -1:
-            break
-        print(dataComments[i]['primaryComment'])
-        res = php.insert('insertComment.php',dataComments[i]['primaryComment'])
-        
-        if len(dataComments[i]['secondaryComment'])>0:
-            for j in range(len(dataComments[i]['secondaryComment'])):
-                print(dataComments[i]['secondaryComment'][j])
-                if res == -1:
-                    break
-                res = php.insert('insertSecondaryComment.php',dataComments[i]['secondaryComment'][j])
-    
-    '''
     #Se obtiene el post
-    data=h.collectionPOST(URL_GROUP,100)
+    data=h.collectionPOST(url_group, amount)
     
     for index in range(len(data)):
         if res == -1:
@@ -63,8 +40,6 @@ if __name__ == "__main__":
                         break
                     res = php.insert('insertSecondaryComment.php',dataComments[i]['secondaryComment'][j])
                     
-        
-        
         #Se obtiene quienes vieron el post
         time.sleep(1)
         dataView = h.getUsernames(data[index]['id'], URL_VISITED, 'view_names')
@@ -104,4 +79,11 @@ if __name__ == "__main__":
         print("EXITO")
     else:
         print("ERROR AL EJECUTAR EL PROGRAMA")
+
+
+
+if __name__ == "__main__":
+    getAllInfo(user[3],password[3],'https://m.facebook.com/groups/413938496303058', 3)
+    
+   
         

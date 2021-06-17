@@ -23,7 +23,7 @@ if(mysqli_query($conn, $query))
 else
   echo json_encode(array(
     'res' => 'ERROR',
-    'error' => 'ERROR AL AGREGAR POST'
+    'error' => "ERROR AL AGREGAR POST ".$id
   ));
 
 mysqli_close($conn);

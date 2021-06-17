@@ -24,7 +24,7 @@ if(mysqli_query($conn, $query))
 else
 echo json_encode(array(
   'res' => 'ERROR',
-  'error' => 'ERROR AL AGREGAR REACCION'
+  'error' => "ERROR AL AGREGAR REACCION DEL USUARIO ".$user." DEL POST ".$id
 ));
 
 mysqli_close($conn);
