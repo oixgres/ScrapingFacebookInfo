@@ -1,5 +1,3 @@
-user =["6643060042","axmoroigres@gmail.com","mozihao.66@gmail.com", "5561804433"]
-password = ["osiosi123","958674","Sparky07111998", "osiosi123"]
 URL_LOGIN ="https://mbasic.facebook.com/"
 URL_GROUP ="https://m.facebook.com/groups/413938496303058"
 URL_VISITED ="https://m.facebook.com/ufi/group/seenby/profile/browser/?id="

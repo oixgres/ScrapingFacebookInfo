@@ -1,9 +1,9 @@
 <?php 
 
 $host = 'localhost';
-$user = 'conisoft_fb';
-$pass = 'Fengoigres1094346';
-$db = 'conisoft_facebook_scraper';
+$user = '*****';
+$pass = '******';
+$db = '******';
 
 $conn = mysqli_connect($host, $user, $pass, $db);
 

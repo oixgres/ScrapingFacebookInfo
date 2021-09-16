@@ -11,6 +11,7 @@ import phpFunctions as php
 
 
 def getAllInfo(user, password, url_group, amount = 1):
+    print(user)
     PATH = "chromedriver.exe"
     h = Facebook_Scraper_POST(PATH)
     h.loginSession(URL=URL_LOGIN,user=user,password=password)
@@ -84,7 +85,7 @@ def getAllInfo(user, password, url_group, amount = 1):
 
 
 if __name__ == "__main__":
-    getAllInfo(user[3],password[3],'https://m.facebook.com/groups/413938496303058', 3)
+    getAllInfo(user,password,'https://m.facebook.com/groups/413938496303058', 3)
     
    
         
