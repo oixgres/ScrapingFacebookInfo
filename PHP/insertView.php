@@ -23,7 +23,7 @@ else
   else
     echo json_encode(array(
       'res' => 'ERROR',
-      'error' => 'ERROR AL AGREGAR VISTO'
+      'error' => "ERROR AL AGREGAR VISTO DEL USUARIO ".$user." DEL POST ".$id
     ));
 }
 

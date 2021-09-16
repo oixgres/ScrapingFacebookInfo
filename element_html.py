@@ -4,7 +4,7 @@
 LOGIN_EMAIL_ID = "m_login_email"
 PASSWORD_NAME = "pass"
 INPUT_NO_TOUCH_XPATH ="//div/input"
-ARTICLE_LINK_XPATH="//a[@class='_5msj']"
+ARTICLE_LINK_XPATH="//article"
 POST_TEXT_XPATH = "/html/body/div[1]/div/div[4]/div/div[1]/div[1]/div/div/div[1]/div[1]/div"
 POSTER_NAME_XPATH ="/html/body/div[1]/div/div[4]/div/div[1]/div[1]/div/div/div[1]/header/div[2]/div/div/div[1]/h3/span/strong[1]/a"
 BOTTOM_SEE_MORE_XPATH = "/html/body/div[1]/div/div[4]/div/div/div/div/div[2]/div[1]/div[2]/a/div/div/div"
@@ -48,17 +48,17 @@ ALL_REACTIONS_XPATH=[
 
 #COMENTARIOS
 COMMENT_BOX = "//div[@class='_333v _45kb']/div"
-MAIN_COMMENT = ".//div[2]/div[1]/div/div[2]"
+
+MAIN_COMMENT = ".//div[@class='_2b06']/div[2]"
+MAIN_COMMENT_GIF = ".//div[2]/div[2]"
+
 SEC_COMMENT = ".//div[3]/div[1]/div/div[2]/div[1]/div/div[2]"
 SEC_COMMENT_GIF = ".//div[3]/div[1]/div/div[2]/div[1]/div[2]"
 TRADUCT_COMMENT = ".//div[2]/div[4]/div[1]/div/div[2]/div[1]/div[1]/div[2]"
+SEC_COMMENT_GIF_AND_TEXT = ".//div[4]/div[1]/div[2]/div[2]/div[1]/div[2]"
 
 NAMES_COMMENT = "//div/div[@class='_2b05']/a"
-#NAMES_COMMENT = "//div[@class='_2b06']/div[@class='_2b05']/a"
-#NAMES_COMMENT_GIF = "//div[@class='_2b04']/div[@class='_2b05']/a"
+NAMES_COMMENT_ALT = "../div[@class='_2b05']/a"
 
-
-# Link del post con pendiente
-# https://m.facebook.com/groups/413938496303058/permalink/469954730701434 
 
 
