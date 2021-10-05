@@ -15,6 +15,10 @@ def getAllInfo(user, password, url_group, amount = 1):
     PATH = "chromedriver.exe"
     h = Facebook_Scraper_POST(PATH)
     h.loginSession(URL=URL_LOGIN,user=user,password=password)
+    
+    group={
+        id:url_group[url_group.rfind("/")+1:]
+    }
    
     res = 0
     

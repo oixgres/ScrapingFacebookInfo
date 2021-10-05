@@ -9,16 +9,33 @@
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 
 -- -----------------------------------------------------
+-- Table Group
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS group;
+
+CREATE TABLE IF NOT EXISTS group (
+  id_group = VARCHAR(30) NOT NULL,
+  url TEXT NOT NULL,
+  nombre VARCHAR(50) NOT NULL,
+  PRIMARY KEY (id_group))
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- -----------------------------------------------------
 -- Table Post
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS post ;
 
 CREATE TABLE IF NOT EXISTS post (
   id_post VARCHAR(30) NOT NULL,
+  id_group VARCHAR(30) NOT NULL,
   url TEXT NOT NULL,
   persona VARCHAR(50) NOT NULL,
   texto TEXT NOT NULL,
-  PRIMARY KEY (id_post))
+  etiqueta TEXT NULL,
+  PRIMARY KEY (id_post),
+  FOREIGN KEY (id_group)
+  REFERENCES group(id_group)
+  ON DELETE CASCADE)
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- -----------------------------------------------------
@@ -31,6 +48,7 @@ CREATE TABLE IF NOT EXISTS comentario (
   id_post  VARCHAR(30) NOT NULL,
   persona TEXT NOT NULL,
   texto TEXT NULL,
+  etiqueta TEXT NULL,
   PRIMARY KEY (id_comentario),
   FOREIGN KEY (id_post)
   REFERENCES post (id_post)
@@ -49,6 +67,7 @@ CREATE TABLE IF NOT EXISTS respuesta (
   persona TEXT NOT NULL,
   texto TEXT NULL,
   persona_destinada varchar(30),
+  etiqueta TEXT NULL,
   PRIMARY KEY (id_respuesta),
   FOREIGN KEY (id_comentario)
   REFERENCES comentario (id_comentario)
@@ -65,6 +84,7 @@ CREATE TABLE IF NOT EXISTS compartir (
   id_compartir INT NOT NULL AUTO_INCREMENT,
   id_post varchar(30) NOT NULL,
   persona VARCHAR(50) NULL,
+  etiqueta TEXT NULL,
   PRIMARY KEY (id_compartir),
   FOREIGN KEY (id_post)
   REFERENCES post (id_post)
@@ -82,6 +102,7 @@ CREATE TABLE IF NOT EXISTS reaccion (
   id_reaccion INT NOT NULL AUTO_INCREMENT,
   tipo VARCHAR(10) NOT NULL,
   persona VARCHAR(50) NOT NULL,
+  etiqueta TEXT NULL,
   id_post VARCHAR(50) NOT NULL,
   PRIMARY KEY (id_reaccion),
   FOREIGN KEY (id_post)
@@ -107,6 +128,5 @@ CREATE TABLE IF NOT EXISTS visto (
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 ALTER TABLE visto AUTO_INCREMENT=0;
-
 
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
