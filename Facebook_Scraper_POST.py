@@ -72,7 +72,8 @@ class Facebook_Scraper_POST:
         data=[]
         for index in range(len(POST_URL)):
             element={}
-            element['id']=POST_ID[index]
+            element['id_post']=POST_ID[index]
+            element['id_group']=URL[URL.rfind("/")+1:]
             element['url']=POST_URL[index] 
             element['user']=POSTER_NAME[index]
             element['text']=POSTER_TEXT[index]

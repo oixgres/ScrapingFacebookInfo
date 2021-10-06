@@ -9,15 +9,28 @@
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 
 -- -----------------------------------------------------
+-- Table Usuario
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS usuario;
+
+CREATE TABLE IF NOT EXISTS usuario (
+  id_usuario INT NOT NULL AUTO_INCREMENT,
+  correo VARCHAR(30) NOT NULL,
+  pass VARCHAR(30) NOT NULL,
+  PRIMARY KEY(id_usuario))
+ENGINE=InnoDB DEFAULT CHARSET= utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+
+-- -----------------------------------------------------
 -- Table Group
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS group;
+DROP TABLE IF EXISTS grupo;
 
-CREATE TABLE IF NOT EXISTS group (
-  id_group = VARCHAR(30) NOT NULL,
+CREATE TABLE IF NOT EXISTS grupo (
+  id_grupo VARCHAR(30) NOT NULL,
   url TEXT NOT NULL,
   nombre VARCHAR(50) NOT NULL,
-  PRIMARY KEY (id_group))
+  PRIMARY KEY (id_grupo))
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- -----------------------------------------------------
@@ -27,14 +40,14 @@ DROP TABLE IF EXISTS post ;
 
 CREATE TABLE IF NOT EXISTS post (
   id_post VARCHAR(30) NOT NULL,
-  id_group VARCHAR(30) NOT NULL,
+  id_grupo VARCHAR(30) NOT NULL,
   url TEXT NOT NULL,
   persona VARCHAR(50) NOT NULL,
   texto TEXT NOT NULL,
   etiqueta TEXT NULL,
   PRIMARY KEY (id_post),
-  FOREIGN KEY (id_group)
-  REFERENCES group(id_group)
+  FOREIGN KEY (id_grupo)
+  REFERENCES grupo(id_grupo)
   ON DELETE CASCADE)
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 

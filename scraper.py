@@ -10,19 +10,24 @@ from managerFile import readJson,writeJson
 import phpFunctions as php
 
 
-def getAllInfo(user, password, url_group, amount = 1):
+def getAllInfo(user, password, name_group, url_group, amount = 1):
     print(user)
     PATH = "chromedriver.exe"
     h = Facebook_Scraper_POST(PATH)
     h.loginSession(URL=URL_LOGIN,user=user,password=password)
     
-    group={
-        id:url_group[url_group.rfind("/")+1:]
-    }
-   
-    res = 0
+    group_data={}
+    group_data['id']=url_group[url_group.rfind("/")+1:]
+    group_data['url']=url_group
+    group_data['name']=name_group
     
-    #Se obtiene el post
+    # Bandera de resultado
+    res = 0
+
+    # Creamos grupo en la base de datos
+    php.insert('insertGroup.php',group_data)
+    
+    #Se obtiene la coleccion de posts
     data=h.collectionPOST(url_group, amount)
     
     for index in range(len(data)):
@@ -89,7 +94,4 @@ def getAllInfo(user, password, url_group, amount = 1):
 
 
 if __name__ == "__main__":
-    getAllInfo(user,password,'https://m.facebook.com/groups/413938496303058', 3)
-    
-   
-        
+    getAllInfo(user,password,'comebalanceadouabc20','https://m.facebook.com/groups/413938496303058', 3)
