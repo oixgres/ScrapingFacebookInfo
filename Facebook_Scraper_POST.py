@@ -9,14 +9,11 @@ import re
 import json
 class Facebook_Scraper_POST:
 
-
     def __init__(self,path):
         self.driver = webdriver.Chrome(path)
 
     def get(self,URL):
         self.driver.get(URL)
-
-
 
     def loginSession(self,URL,user ,password):
         self.driver.get(URL) # acceder page-login
@@ -73,7 +70,7 @@ class Facebook_Scraper_POST:
         for index in range(len(POST_URL)):
             element={}
             element['id_post']=POST_ID[index]
-            element['id_group']=URL[URL.rfind("/")+1:]
+            element['id_grupo']=URL[URL.rfind("/")+1:]
             element['url']=POST_URL[index] 
             element['user']=POSTER_NAME[index]
             element['text']=POSTER_TEXT[index]

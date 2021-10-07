@@ -3,19 +3,19 @@ require_once 'connection.php';
 require_once 'generalFunctions.php';
 
 $id_post = $_POST['id_post'];
-$id_group = $_POST['id_group'];
+$id_group  = $_POST['id_grupo'];
 $url = $_POST['url'];
 $user = $_POST['user'];
 $text = $_POST['text'];
 
 if(getFirstQueryElement($conn, 'post', 'id_post', 'id_post', $id_post))
 {
-  $query = "UPDATE post SET url='$url', persona='$user', texto='$text' WHERE id_post='$id_post'";
+  $query = "UPDATE post SET url='$url', texto='$text' WHERE id_post='$id_post'";
   $res = array('res' => "El post ".$id_post. " ha sido actualizado");
 }
 else
 {
-  $query = "INSERT INTO post(id_post, url, persona, texto) VALUES ('".$id_post."', '".$url."', '".$user."', '".$text."')";
+  $query = "INSERT INTO post(id_post, id_grupo, url, persona, texto) VALUES ('".$id_post."', '$id_group','".$url."', '".$user."', '".$text."')";
   $res = array('res' => "El post ".$id_post." ha sido creado");
 }
 

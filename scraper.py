@@ -37,7 +37,7 @@ def getAllInfo(user, password, name_group, url_group, amount = 1):
 
         #Se obtienen comentarios y respuestas
         time.sleep(1)
-        dataComments = h.getComments(data[index]['url'], data[index]['id'])
+        dataComments = h.getComments(data[index]['url'], data[index]['id_post'])
     
         for i in range(len(dataComments)):
             if res == -1:
@@ -53,7 +53,7 @@ def getAllInfo(user, password, name_group, url_group, amount = 1):
                     
         #Se obtiene quienes vieron el post
         time.sleep(1)
-        dataView = h.getUsernames(data[index]['id'], URL_VISITED, 'view_names')
+        dataView = h.getUsernames(data[index]['id_post'], URL_VISITED, 'view_names')
         
         for i in range(len(dataView['view_names'])):
             if res == -1:
@@ -62,7 +62,7 @@ def getAllInfo(user, password, name_group, url_group, amount = 1):
             
         #Se obtienen las compartidas
         time.sleep(1)
-        dataShares = h.getUsernames(data[index]['id'], URL_SHARED, 'shared_names')
+        dataShares = h.getUsernames(data[index]['id_post'], URL_SHARED, 'shared_names')
         
         for i in range(len(dataShares['shared_names'])):
             if res == -1:
@@ -72,7 +72,7 @@ def getAllInfo(user, password, name_group, url_group, amount = 1):
         
         #Se obtienen reacciones
         time.sleep(1)
-        dataReactions = h.get_reactions(data[index]['id'], URL_LIKED)
+        dataReactions = h.get_reactions(data[index]['id_post'], URL_LIKED)
         
         #Almacenamos las reacciones
         for i in range(len(dataReactions)):
@@ -84,7 +84,6 @@ def getAllInfo(user, password, name_group, url_group, amount = 1):
                     if res == -1:
                         break
                     res = php.insert('insertReaction.php', dataReactions[i]['reactions'][j])
-        
                     
     if res == 0:
         print("EXITO")
