@@ -17,6 +17,16 @@ CREATE TABLE IF NOT EXISTS usuario (
   id_usuario INT NOT NULL AUTO_INCREMENT,
   correo VARCHAR(30) NOT NULL,
   pass VARCHAR(30) NOT NULL,
+  nombre VARCHAR(30) NOT NULL,
+  apellido VARCHAR(30) NOT NULL,
+  fecha_nacimiento DATE NOT NULL,
+  sexo VARCHAR(1) NOT NULL,
+  telefono VARCHAR(30) NOT NULL,
+  direccion VARCHAR(30) NOT NULL,
+  ciudad VARCHAR(30) NOT NULL,
+  estado VARCHAR(30) NOT NULL,
+  pais VARCHAR(30) NOT NULL,
+  cp VARCHAR(5) NOT NULL,
   PRIMARY KEY(id_usuario))
 ENGINE=InnoDB DEFAULT CHARSET= utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
