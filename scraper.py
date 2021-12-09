@@ -93,4 +93,4 @@ def getAllInfo(user, password, name_group, url_group, amount = 1):
 
 
 if __name__ == "__main__":
-    getAllInfo(user,password,'comebalanceadouabc20','https://m.facebook.com/groups/413938496303058', 3)
+    getAllInfo(user,password,'comebalanceadouabc20','https://m.facebook.com/groups/413938496303058', 99)
